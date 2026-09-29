@@ -1542,6 +1542,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 .mchips{display:flex;flex-wrap:wrap;gap:6px}
 .mchips span{border:1px solid #333;border-radius:999px;padding:7px 12px;font-size:.76rem;color:#ddd;background:#171717}
 .guard p{margin-top:12px;font-size:.84rem;color:#aaa;line-height:1.5}
+.prop dl{grid-template-columns:repeat(3,minmax(0,1fr))}
 </style>
 </head>
 <body>
@@ -1620,15 +1621,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
 <!-- 1.1 -->
 <section class="section-light" id="c1-1" data-lesson="1-1">
-  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · El aula</span><h2>Un mercado con dos aspirantes y dos frentes</h2><p>La IUSH le habla a dos personas distintas y compite contra dos tipos de institución. Elige un programa para ver con quién compite y quién es su aspirante.</p></div>
-
-  <div class="block reveal">
-    <div class="grid-3">
-      <article class="trait"><div class="ic">🎒</div><h4>Dos aspirantes, dos decisiones</h4><p>El joven que sale del colegio elige por vocación e identidad. El adulto que ya trabaja elige por homologación, horario nocturno y ascenso laboral.</p></article>
-      <article class="trait"><div class="ic">⚖️</div><h4>Compite en dos frentes</h4><p>Por un lado, universidades tradicionales como UPB, EAFIT y la U. de Medellín. Por el otro, formación rápida y accesible como SENA, CESDE e ITM. La IUSH queda en el medio, como puente entre las dos.</p></article>
-      <article class="trait"><div class="ic">🤝</div><h4>Los convenios son su ventaja</h4><p>Más de 20 convenios con colegios, instituciones técnicas y empresas, con descuentos del 6% al 30% en la matrícula y PIN gratis en varios casos.</p></article>
-    </div>
-  </div>
+  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · El aula</span><h2>Un mercado con dos aspirantes y dos frentes</h2><p>La IUSH le habla al joven que sale del colegio y al adulto que ya trabaja, y compite a la vez con universidades tradicionales y con formación rápida y accesible. Elige un programa para ver con quién compite y quién es su aspirante.</p></div>
 
   <div class="block reveal">
     <div class="aula">
@@ -1652,7 +1645,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
   <div class="block reveal">
     <div class="boletin-bar">
-      <p>Ingeniería Industrial y la Especialización en Cultura y Clima están en la oferta y en la priorización, pero su histórico viene en descenso.</p>
+      <p>Toca el botón para aislar los dos programas en descenso.</p>
       <button type="button" class="alert-toggle" id="alertToggle" aria-pressed="false">Mostrar alertas</button>
     </div>
     <div class="signal-table-wrap"><table class="signal-table boletin" id="t-hist"></table></div>
@@ -1698,8 +1691,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
             <ul class="obs">
               <li>Un solo píxel con API de conversiones y el evento Lead de la landing como objetivo.</li>
               <li>Una campaña por programa, siempre encendida durante la temporada de matrículas.</li>
-              <li>El tráfico llega a una landing propia que explica el programa antes de pedir datos.</li>
-              <li>Meta recibe qué leads se volvieron PIN y matrícula, y aprende a buscar aspirantes en lugar de formularios.</li>
+                            <li>Meta recibe qué leads se volvieron PIN y matrícula, y aprende a buscar aspirantes en lugar de formularios.</li>
             </ul>
             <div class="sema"><div><i class="ok"></i>Medición</div><div><i class="ok"></i>Continuidad</div><div><i class="ok"></i>Estructura</div><div><i class="ok"></i>Destino del tráfico</div></div>
             <button type="button" class="flip-btn" data-flip="flipMeta">Volver ↻</button>
@@ -1728,8 +1720,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
               <li>Una campaña de búsqueda por programa, con palabras que muestran intención de estudiar.</li>
               <li>La conversión se mide en la landing y se completa con el PIN y la matrícula que devuelve el CRM.</li>
               <li>Negativas cruzadas entre programas y la marca protegida con un presupuesto acotado.</li>
-              <li>Es el canal que atiende a quien ya está buscando: hay demanda que hoy nadie está capturando.</li>
-            </ul>
+                          </ul>
             <div class="sema"><div><i class="ok"></i>Medición</div><div><i class="ok"></i>Continuidad</div><div><i class="ok"></i>Estructura</div><div><i class="ok"></i>Destino del tráfico</div></div>
             <button type="button" class="flip-btn" data-flip="flipGoogle">Volver ↻</button>
           </div>
@@ -1795,15 +1786,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
     </div>
   </div>
 
-  <div class="block reveal">
-    <div class="sub-head"><span class="tag">Hoy frente a la ruta</span><h3>Lo que cambia en la medición</h3></div>
-    <div class="vs-list">
-      <div class="vs-row"><span class="k">Píxeles</span><span class="a">Siete, repartidos por escuela y sin uno principal</span><span class="ar">→</span><span class="b">Uno solo, con API de conversiones</span></div>
-      <div class="vs-row"><span class="k">Conversión en Google</span><span class="a">Clics en mapas, llamadas y visitas a la sede</span><span class="ar">→</span><span class="b">Lead, PIN y matrícula</span></div>
-      <div class="vs-row"><span class="k">Origen del lead</span><span class="a">Se pierde en formularios nativos y chats de WhatsApp</span><span class="ar">→</span><span class="b">Viaja con UTM, programa y versión de landing hasta Zoho</span></div>
-      <div class="vs-row"><span class="k">Qué optimiza la pauta</span><span class="a">Formularios o conversaciones</span><span class="ar">→</span><span class="b">Aspirantes que generan PIN</span></div>
-    </div>
-  </div>
 </section>
 
 <!-- 2.2 -->
@@ -1898,8 +1880,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
         <div class="flow-legend">
           <span><b>Pasos 1 y 2:</b> cambian según la versión de la landing</span>
           <span><b>Paso 3 en adelante:</b> idéntico para A y B</span>
-          <span><b>Menores:</b> la llamada va al acudiente</span>
-          <span><b>Legal:</b> autorización de contacto por llamada y WhatsApp, incluso automatizado (Ley 1581)</span>
         </div>
       </div>
     </div>
@@ -2000,30 +1980,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
   </div>
 
   <div class="block reveal">
-    <div class="sub-head"><span class="tag">De la conversación a Zoho</span><h3>El asesor recibe una oportunidad, no un teléfono</h3><p>El agente no deja un resumen genérico. Registra lo que el aspirante busca, sus dudas, sus barreras y el paso que aceptó dar. Mira cómo se llena la ficha mientras avanza la conversación.</p></div>
-    <div class="zdemo">
-      <div class="zchat">
-        <div class="wa-head"><div class="av">IUSH</div><div><strong>Admisiones IUSH</strong><span>Agente de WhatsApp · en línea</span></div></div>
-        <div class="wa-body" id="zBody"></div>
-        <div class="zbtns"><button type="button" class="flow-play" id="zPlay">▶ Ver cómo se llena la ficha</button></div>
-      </div>
-      <div class="zcard">
-        <div class="zcard-h"><span>Zoho CRM · Ficha comercial</span><b>Carolina Ruiz · Contaduría Pública</b></div>
-        <div class="zgrp" data-g="origen"><h5>Origen</h5><dl id="zOrigen"></dl></div>
-        <div class="zgrp" data-g="perfil"><h5>Perfil</h5><dl id="zPerfil"></dl></div>
-        <div class="zgrp" data-g="conv"><h5>Conversación</h5><dl id="zConv"></dl></div>
-        <div class="zgrp" data-g="gest"><h5>Gestión</h5><dl id="zGest"></dl></div>
-      </div>
-    </div>
-    <div class="grid-3" style="margin-top:14px">
-      <div class="eje-card"><div class="eje-num">01</div><h5>Retoma sin repetir</h5><p>El asesor parte de la duda o la barrera concreta, sin volver a preguntar lo que el agente ya sabe.</p></div>
-      <div class="eje-card"><div class="eje-num">02</div><h5>Continúa lo acordado</h5><p>Llega a la cita o al compromiso que el aspirante ya aceptó.</p></div>
-      <div class="eje-card"><div class="eje-num">03</div><h5>Cierra el proceso</h5><p>Orienta el PIN, los documentos y el pago de la matrícula.</p></div>
-    </div>
-  </div>
-
-  <div class="block reveal">
-    <div class="grid-2">
+    <div>
       <div class="guard"><b>Reglas de los agentes</b>
         <ul class="obs">
           <li>Solo responden con información aprobada por la IUSH.</li>
@@ -2032,10 +1989,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
           <li>Solo contactan con autorización previa por llamada y WhatsApp (Ley 1581).</li>
           <li>Se identifican como asistentes de admisiones.</li>
         </ul>
-      </div>
-      <div class="guard"><b>Cómo se mide</b>
-        <div class="mchips"><span>Tiempo al primer contacto</span><span>Contactabilidad por franja</span><span>% de conversaciones calificadas</span><span>Citas agendadas</span><span>Paso a asesor</span><span>PIN generados</span></div>
-        <p>Cada métrica se lee por programa, canal y versión de landing, con los mismos campos de la clase 1.</p>
       </div>
     </div>
     <p class="bridge-line" style="margin-top:22px">Los agentes no reemplazan a los asesores: les quitan el primer contacto y el seguimiento para que dediquen su tiempo a orientar y cerrar. <b>La demo de la clase 4 termina en esta misma página de gracias.</b></p>
@@ -2073,14 +2026,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
       <div class="eje-card"><div class="eje-num">02</div><h5>La landing lanza una moneda</h5><p>Un script asigna al azar la versión A o B y la recuerda si el visitante vuelve.</p></div>
       <div class="eje-card"><div class="eje-num">03</div><h5>La versión viaja al CRM</h5><p>Un campo oculto "variante" llega a Zoho con cada lead, junto con los UTM.</p></div>
       <div class="eje-card"><div class="eje-num">04</div><h5>Lectura sumada</h5><p>La variable es la misma en los 14 programas, así que los resultados se suman.</p></div>
-    </div>
-    <div class="absim" style="margin-top:14px;border-radius:20px;border:1px solid var(--line-light)">
-      <p>Simula mil visitas para ver cómo se reparte el tráfico entre las dos versiones:</p>
-      <div class="abbars">
-        <div class="abbar"><span>A · video</span><div class="tr"><div class="fl v" id="d-fv"></div></div><span class="n" id="d-nv">0</span></div>
-        <div class="abbar"><span>B · formulario</span><div class="tr"><div class="fl f" id="d-ff"></div></div><span class="n" id="d-nf">0</span></div>
-      </div>
-      <button type="button" class="button button-primary" id="d-sim">Simular 1.000 visitas</button>
     </div>
   </div>
 
@@ -2135,9 +2080,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
       <div class="ang-card" id="angCard"></div>
     </div>
   </div>
-  <div class="block reveal">
-    <p class="bridge-line" style="background:var(--ink);color:#fff">Reglas de redacción: <b>sin anglicismos</b> cuando hay palabra en español, <b>sin guiones como conectores</b> y emojis solo donde el tono lo pida. Los descuentos por convenio se validan con admisiones antes de publicarse.</p>
-  </div>
 </section>
 
 <!-- 2.7 -->
@@ -2158,10 +2100,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
     <div class="signal-table-wrap" style="background:#fff;border-color:#fff"><table class="signal-table on-light" id="t-metas"></table></div>
   </div>
 
-  <div class="block reveal">
-    <div class="sub-head"><span class="tag">Por canal</span><h3>Primero Meta: 60% de la inversión para arrancar con volumen</h3></div>
-    <div class="canal-grid" id="canal-money" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div>
-  </div>
 
   <div class="block reveal">
     <div class="closing"><h3>Un mismo plan de estudios. Lo que cambia es <em>cuántos aspirantes trae la pauta</em>.</h3><p>Las dos propuestas usan la misma medición, el mismo recorrido, las mismas landings y los mismos ángulos. La decisión es de inversión, no de estrategia.</p></div>
@@ -2357,8 +2295,7 @@ function ang(p){
   $('angCard').innerHTML='<article class="vert-card"><div class="vert-head '+(g[0]==='cre'?'a':'b')+'"><div class="vert-tag">'+(g[0]==='cre'?'Ciencias Creativas':'Ciencias Administrativas')+'</div><h4>'+p+'</h4><div class="sub">'+x.aud+'</div><span class="meta-b">META '+g[3]+'</span></div>'+
     '<div class="vert-body"><div class="ang-grid"><div class="main"><b>Ángulo principal</b><span>'+x.a[0]+'</span></div><div><b>Secundario 1</b><span>'+x.a[1]+'</span></div><div><b>Secundario 2</b><span>'+x.a[2]+'</span></div></div>'+
     '<div class="vert-format"><b>Elemento propio</b><span>'+x.el+'</span></div>'+
-    '<div class="vert-format" style="border-top:0;padding-top:8px"><b>Pregunta del formulario</b><span>'+x.q+'</span></div>'+
-    '<div class="vert-cta"><b>Botón principal</b><span>'+x.cta+'</span></div></div></article>';
+    '<div class="vert-format" style="border-top:0;padding-top:8px"><b>Pregunta del formulario</b><span>'+x.q+'</span></div>'+'</div></article>';
 }
 each('.ang-chip',function(b){b.onclick=function(){ang(b.dataset.p)}});
 ang('Animación');
@@ -2383,8 +2320,8 @@ function propHTML(f,t,n,h,desc){
   var pg=t.ig/t.inv*100,pm=100-pg;
   return '<button type="button" class="prop" data-f="'+f+'"><div class="pk"><small>Propuesta '+n+'</small><span class="st"></span></div><h4>'+h+'</h4>'+
     '<div class="pbig">'+mill(t.inv)+'<small>Inversión en medios · 10 de octubre al 31 de enero</small></div>'+
-    '<dl><div><dt>Leads</dt><dd>'+n0(t.l)+'</dd></div><div><dt>Matrículas pauta</dt><dd>'+t.mp.toLocaleString('es-CO',{maximumFractionDigits:0})+'</dd></div><div><dt>CPL promedio</dt><dd>'+money(t.inv/t.l)+'</dd></div><div><dt>Por día</dt><dd>'+money(t.inv/DIAS)+'</dd></div></dl>'+
-    '<div class="psplit"><div class="g" style="flex:'+pg.toFixed(1)+'">Google '+pg.toFixed(0)+'%</div><div class="m" style="flex:'+pm.toFixed(1)+'">Meta '+pm.toFixed(0)+'%</div></div>'+
+    '<dl><div><dt>Leads</dt><dd>'+n0(t.l)+'</dd></div><div><dt>Matrículas pauta</dt><dd>'+t.mp.toLocaleString('es-CO',{maximumFractionDigits:0})+'</dd></div><div><dt>Por día</dt><dd>'+money(t.inv/DIAS)+'</dd></div></dl>'+
+    '<div class="psplit"><div class="g" style="flex:'+pg.toFixed(1)+'">Google '+pg.toFixed(0)+'% · '+mill(t.ig)+'</div><div class="m" style="flex:'+pm.toFixed(1)+'">Meta '+pm.toFixed(0)+'% · '+mill(t.im)+'</div></div>'+
     '<p>'+desc+'</p></button>';
 }
 $('propGrid').innerHTML=
@@ -2402,11 +2339,6 @@ function render(f){
   });
   h+='<tr class="total-row"><td>Total</td><td class="num-cell">'+t.m+'</td><td class="num-cell">'+t.mp.toLocaleString('es-CO',{maximumFractionDigits:1})+'</td><td class="num-cell">'+n0(t.l)+'</td><td class="num-cell">'+money(t.im/t.lm)+'</td><td class="num-cell">'+money(t.ig/t.lg)+'</td><td class="num-cell">'+money(t.inv/t.l)+'</td><td class="num-cell">'+mill(t.inv)+'</td></tr></tbody>';
   $('t-metas').innerHTML=h;
-  var pm=t.im/t.inv*100,pg=t.ig/t.inv*100;
-  $('canal-money').innerHTML=
-    card('GOOGLE ADS','data:image/png;base64,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','Alta intención, CPL más alto.','El 40% de la inversión, para la demanda que ya está buscando.',t.ig,pg,t.lg,t.ig/t.lg)+
-    card('META','data:image/png;base64,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','Descubrimiento, CPL más bajo.','El 60% de la inversión, para arrancar con más volumen y un CPL más bajo.',t.im,pm,t.lm,t.im/t.lm);
-  requestAnimationFrame(function(){each('#canal-money .canal-bar i',function(i){i.style.width=i.dataset.w+'%'})});
 }
 function card(pill,logo,h4,desc,v,p,l,cpl){
   return '<article class="canal-card"><span class="canal-pill">'+pill+'</span><img class="canal-logo" src="'+logo+'" alt=""><h4>'+h4+'</h4><p class="canal-desc">'+desc+'</p>'+
@@ -2440,28 +2372,6 @@ render(1);
     sT.push(setTimeout(function(){Array.prototype.forEach.call(li,function(y){y.classList.remove('lit')})},li.length*900+800));
   };
 
-  var ZM=[
-   ['in','Hola Carolina, soy el asistente de admisiones de la Salazar y Herrera. Vi que te interesa Contaduría Pública. ¿Trabajas hoy en el área contable?',{zOrigen:[['Campaña','contaduria_2027-1 · Meta'],['Anuncio','De auxiliar contable a Contador(a) Público(a)'],['Landing','Versión formulario'],['Formulario','Trabaja en el área contable · viene del SENA']]}],
-   ['out','Sí, soy auxiliar contable hace 4 años. Hice el tecnólogo en el SENA.',{zPerfil:[['Motivación','Pasar de auxiliar a contadora'],['Trayectoria','Tecnóloga del SENA, 4 años de experiencia']]}],
-   ['in','Con tu tecnología del SENA puedes homologar materias y tienes 20% de descuento. ¿Te serviría estudiar de noche?',null],
-   ['out','Sí, solo puedo de noche. ¿Cuánto vale el semestre?',{zPerfil:[['Disponibilidad','Jornada nocturna, inicia en 2027-1']],zConv:[['Preguntas','Valor del semestre y homologación'],['Barreras','Costo y horario']]}],
-   ['in','Te envío el valor apenas admisiones confirme las tarifas 2027. ¿Quieres que una asesora revise tu homologación el jueves a las 6:30 p. m.?',{zConv:[['Síntesis','Quiere homologar desde el SENA, necesita jornada nocturna y espera el valor 2027']]}],
-   ['out','Sí, el jueves me sirve.',{zGest:[['Estado','Interés alto'],['Próximo paso','Cita el jueves 6:30 p. m. para revisar la homologación'],['Tarea','Asesora: revisar el certificado del SENA antes de la cita'],['Prioridad','Alta']]}]
-  ];
-  var zT=[];
-  function zReset(){zT.forEach(clearTimeout);zT=[];$('zBody').innerHTML='';['zOrigen','zPerfil','zConv','zGest'].forEach(function(k){$(k).innerHTML=''})}
-  function zMsg(m){var d=document.createElement('div');d.className='wa-msg '+m[0];d.textContent=m[1];$('zBody').appendChild(d);
-    if(m[2])Object.keys(m[2]).forEach(function(k){m[2][k].forEach(function(r){var dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=r[0];dd.textContent=r[1];dt.className=dd.className='new';$(k).appendChild(dt);$(k).appendChild(dd)})})}
-  $('zPlay').onclick=function(){
-    zReset();var t=0;
-    ZM.forEach(function(m){
-      if(m[0]==='in'){zT.push(setTimeout(function(){var ty=document.createElement('div');ty.className='wa-typing';ty.id='zTy';ty.innerHTML='<i></i><i></i><i></i>';$('zBody').appendChild(ty)},t));t+=900;
-        zT.push(setTimeout(function(){var ty=$('zTy');if(ty)ty.remove();zMsg(m)},t));}
-      else{t+=700;zT.push(setTimeout(function(){zMsg(m)},t))}
-      t+=1100;
-    });
-  };
-  zMsg(ZM[0]);
 })();
 
 /* ---------------- 2.4 Landing en computador ---------------- */
@@ -2672,7 +2582,6 @@ $('d-new').onclick=function(){lead={};setV(flip())};
 each('.vtab',function(b){b.onclick=function(){lead={};setV(b.dataset.v)}});
 $('d-reset').onclick=function(){lead={};renderLanding()};
 $('d-notes').onchange=function(e){$('abdemo').classList.toggle('notes',e.target.checked)};
-$('d-sim').onclick=function(){var a=0,b=0;for(var i=0;i<1000;i++){if(Math.random()<0.5)a++;else b++}$('d-nv').textContent=a;$('d-nf').textContent=b;$('d-fv').style.width=(a/10)+'%';$('d-ff').style.width=(b/10)+'%'};
 v='video';save(v);
 renderLanding();
 })();
