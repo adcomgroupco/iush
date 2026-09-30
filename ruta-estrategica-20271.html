@@ -1543,6 +1543,65 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 .mchips span{border:1px solid #333;border-radius:999px;padding:7px 12px;font-size:.76rem;color:#ddd;background:#171717}
 .guard p{margin-top:12px;font-size:.84rem;color:#aaa;line-height:1.5}
 .prop dl{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* v3: mapa del aula, medición en landing, preguntas y presupuesto total */
+.mapa{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:16px;align-items:start}
+@media(max-width:980px){.mapa{grid-template-columns:1fr}}
+.mapa-chart{background:#fff;border:1px solid var(--line-light);border-radius:24px;padding:14px 14px 8px}
+.mapa-chart svg{width:100%;height:auto;display:block;font-family:'Poppins',sans-serif}
+.mapa-chart .mq{font-size:13px;font-weight:900;letter-spacing:.14em;fill:#8a7300}
+.mapa-chart .mq2{font-size:12px;fill:#777}
+.mapa-chart .max{font-size:13px;font-weight:700;fill:#555}
+.mapa-chart .ml{font-size:13px;font-weight:700;fill:#1a1a1a;pointer-events:none}
+.mapa-chart .mn{font-size:12px;font-weight:900;fill:#1a1a1a;pointer-events:none}
+.mapa-chart .mb{cursor:pointer;outline:none}
+.mapa-chart .mb circle{transition:transform .2s ease,opacity .2s ease;transform-box:fill-box;transform-origin:center}
+.mapa-chart .mb:hover circle,.mapa-chart .mb:focus circle{transform:scale(1.08)}
+.mapa-chart .mb.on circle{stroke:#050505;stroke-width:4}
+.mapa-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.74rem;color:#555;padding:4px 8px 6px}
+.mapa-legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.mapa .ficha{grid-template-columns:1fr;position:sticky;top:140px}
+.mapa .ficha-photo{width:56px;height:56px;font-size:1.5rem}
+.mapa .ficha-photo::after{display:none}
+.mapa .ficha h4{margin:4px 0 8px}
+.comp-chips span{display:inline-block;margin:0 4px 4px 0;padding:3px 9px;border-radius:999px;background:#f1efe7;font-size:.74rem;font-weight:700;color:#333}
+.fnote{margin-top:10px;font-size:.8rem;color:#555;line-height:1.5}
+@media(max-width:980px){.mapa .ficha{position:static}}
+.evflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+@media(max-width:980px){.evflow{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.evflow{grid-template-columns:1fr}}
+.ev{position:relative;background:#fff;border:1px solid var(--line-light);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.ev b{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--yellow);display:grid;place-items:center;font-size:.72rem;font-weight:900}
+.ev strong{font-size:.95rem;line-height:1.2}
+.ev code,.fcol code{font-family:ui-monospace,monospace;font-size:.72rem;background:#f1efe7;border-radius:6px;padding:2px 7px;width:fit-content;color:#5a4a00}
+.ev span{font-size:.78rem;color:#666;line-height:1.4}
+.ev.hi{background:var(--yellow);border-color:var(--yellow)}
+.ev.hi code{background:rgba(255,255,255,.6)}
+.ev.hi span{color:#3a3000}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+@media(max-width:900px){.fields{grid-template-columns:1fr}}
+.fcol{background:#fff;border:1px solid var(--line-light);border-radius:22px;padding:20px 22px}
+.fcol.res{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fcol h5{font-size:.66rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8a7300;margin-bottom:10px}
+.fcol.res h5{color:var(--yellow)}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.fcol li{font-size:.86rem;line-height:1.35;padding-bottom:8px;border-bottom:1px dashed var(--line-light)}
+.fcol.res li{border-bottom-color:#2c2c2c}
+.fcol li:last-child{border-bottom:0;padding-bottom:0}
+.fcol li span{display:block;font-size:.76rem;color:#777;margin-top:2px}
+.fcol.res li span{color:#aaa}
+.qbox{margin-top:14px;padding:16px 18px;border-radius:16px;background:#fff8d6;border:1px solid rgba(184,134,11,.35)}
+.qbox>b{display:block;font-size:.6rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8a7300;margin-bottom:6px}
+.qbox strong{display:block;font-size:1.05rem;margin-bottom:10px}
+.qopts{display:flex;flex-wrap:wrap;gap:6px}
+.qopts span{padding:8px 13px;border-radius:999px;background:#fff;border:1px solid #e0d6a8;font-size:.82rem;font-weight:700}
+.qbox small{display:block;margin-top:10px;font-size:.74rem;color:#6b5600}
+.pitems{list-style:none;display:flex;flex-direction:column;gap:6px}
+.pitems li{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:#171717;overflow:hidden}
+.pitems li i{position:absolute;left:0;bottom:0;height:3px;background:var(--yellow)}
+.pitems li span b{display:block;font-size:.88rem}
+.pitems li span small{display:block;font-size:.72rem;color:#9a9a9a;margin-top:2px}
+.pitems li em{font-style:normal;font-weight:900;font-size:1rem;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1621,20 +1680,15 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
 <!-- 1.1 -->
 <section class="section-light" id="c1-1" data-lesson="1-1">
-  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · El aula</span><h2>Un mercado con dos aspirantes y dos frentes</h2><p>La IUSH le habla al joven que sale del colegio y al adulto que ya trabaja, y compite a la vez con universidades tradicionales y con formación rápida y accesible. Elige un programa para ver con quién compite y quién es su aspirante.</p></div>
+  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · El aula</span><h2>Un mercado con dos aspirantes y dos frentes</h2><p>Cada círculo es un programa. A la izquierda, los que le hablan al joven que sale del colegio; a la derecha, los que le hablan al adulto que ya trabaja. Arriba compiten con universidades tradicionales; abajo, con formación rápida y accesible. El tamaño es la meta de matrículas. Toca un programa para ver su ficha.</p></div>
 
   <div class="block reveal">
-    <div class="aula">
-      <div class="aula-pick" id="aulaPick"></div>
-      <div class="aula-main">
-        <div class="spec">
-          <div class="spec-top"><b>Con quién compite · <span id="specProg" style="color:#fff">Administración de Empresas</span></b><span>Posición cualitativa, de lo más rápido y accesible a lo más tradicional</span></div>
-          <div class="spec-track" id="specTrack"><div class="spec-line"></div></div>
-          <div class="spec-ends"><span>← Formación rápida y accesible</span><span>Universidad tradicional →</span></div>
-          <p class="spec-note" id="specNote"></p>
-        </div>
-        <div class="ficha" id="ficha"></div>
+    <div class="mapa">
+      <div class="mapa-chart">
+        <svg id="mapa" viewBox="0 0 1000 620" role="img" aria-label="Mapa de los 14 programas según tipo de aspirante y tipo de competencia"></svg>
+        <div class="mapa-legend"><span><i style="background:#ffd400"></i>Ciencias Creativas</span><span><i style="background:#7894ff"></i>Ciencias Administrativas</span><span><i style="background:#fff;box-shadow:inset 0 0 0 3px #e5484d"></i>En descenso</span><span>Tamaño: meta de matrículas</span></div>
       </div>
+      <div class="ficha" id="ficha"></div>
     </div>
   </div>
 </section>
@@ -1653,7 +1707,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
   <div class="block reveal">
     <div class="mini-decisions">
-      <div class="mini-decision"><div class="t">2027-1 es un primer semestre: los primeros semestres matriculan más (212 y 202, frente a 169 y 102).</div><div class="cta">La meta de 202 es alcanzable.</div></div>
+      <div class="mini-decision"><div class="t">2027-1 es un primer semestre: los primeros semestres matriculan más (212 y 202, frente a 169 y 102).</div><div class="cta">La meta de 470 pide más del doble del mejor periodo.</div></div>
       <div class="mini-decision red"><div class="t">Ingeniería Industrial y la Especialización en Cultura y Clima son los priorizados más débiles.</div><div class="cta">Presupuesto mínimo y revisión temprana.</div></div>
       <div class="mini-decision"><div class="t">Derecho e Ingeniería en Inteligencia de Negocios vienen creciendo sin pauta.</div><div class="cta">Primeros candidatos si se libera presupuesto.</div></div>
     </div>
@@ -1691,7 +1745,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
             <ul class="obs">
               <li>Un solo píxel con API de conversiones y el evento Lead de la landing como objetivo.</li>
               <li>Una campaña por programa, siempre encendida durante la temporada de matrículas.</li>
-                            <li>Meta recibe qué leads se volvieron PIN y matrícula, y aprende a buscar aspirantes en lugar de formularios.</li>
+                            <li>Meta recibe qué leads llegaron de verdad a Zoho, y aprende a buscar aspirantes en lugar de formularios.</li>
             </ul>
             <div class="sema"><div><i class="ok"></i>Medición</div><div><i class="ok"></i>Continuidad</div><div><i class="ok"></i>Estructura</div><div><i class="ok"></i>Destino del tráfico</div></div>
             <button type="button" class="flip-btn" data-flip="flipMeta">Volver ↻</button>
@@ -1718,7 +1772,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
             <h4>Lo que abre</h4>
             <ul class="obs">
               <li>Una campaña de búsqueda por programa, con palabras que muestran intención de estudiar.</li>
-              <li>La conversión se mide en la landing y se completa con el PIN y la matrícula que devuelve el CRM.</li>
+              <li>La conversión se mide en la landing y se confirma con el lead que llega a Zoho.</li>
               <li>Negativas cruzadas entre programas y la marca protegida con un presupuesto acotado.</li>
                           </ul>
             <div class="sema"><div><i class="ok"></i>Medición</div><div><i class="ok"></i>Continuidad</div><div><i class="ok"></i>Estructura</div><div><i class="ok"></i>Destino del tráfico</div></div>
@@ -1772,7 +1826,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
 <!-- 2.1 -->
 <section class="section-dark" id="c2-1" data-lesson="2-1" style="padding-top:0">
-  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · Medición</span><h2>Primero, que cada peso deje un dato</h2><p>La base de todo el plan. Una señal que nace en el anuncio y viaja hasta la matrícula, y que después vuelve a Meta y a Google para que aprendan qué aspirante buscar.</p></div>
+  <div class="lesson-head reveal"><span class="lesson-n">Clase 1 · Medición</span><h2>Primero, que cada peso deje un dato</h2><p>La base de todo el plan. Una señal que nace en el anuncio, llega a Zoho como lead y vuelve a Meta y a Google. Así el CPL se calcula con los leads que de verdad entraron al CRM, no con los formularios que reporta cada plataforma.</p></div>
 
   <div class="block reveal">
     <div class="mchain-wrap">
@@ -1781,7 +1835,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
         <button type="button" class="flow-play" id="mPlay">▶ Seguir a un aspirante</button>
       </div>
       <div class="mchain" id="mchain"></div>
-      <div class="mloop" id="mloop"><span class="arr">↺</span><span><b>El dato vuelve a la pauta.</b> Zoho devuelve a Meta y a Google qué leads se volvieron PIN y matrícula. Las plataformas dejan de optimizar por formularios y empiezan a optimizar por aspirantes.</span></div>
+      <div class="mloop" id="mloop"><span class="arr">↺</span><span><b>El dato vuelve a la pauta.</b> Zoho le confirma a Meta y a Google qué leads son válidos, para que optimicen por leads reales y no por formularios. Inscritos y matrículas se conectan a las plataformas en una fase posterior.</span></div>
       <div class="mdetail" id="mdetail"></div>
     </div>
   </div>
@@ -1910,7 +1964,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
       <div class="cap-ctrl">
         <div class="cap-row"><div class="cap-lbl"><span>Leads al mes</span><b id="capLeadsV"></b></div>
           <div class="cap-presets"><button type="button" data-f="1">Propuesta 100%</button><button type="button" data-f="0.4">Propuesta 40%</button></div>
-          <input type="range" id="capLeads" min="300" max="3500" step="50" aria-label="Leads al mes"></div>
+          <input type="range" id="capLeads" min="500" max="7000" step="100" aria-label="Leads al mes"></div>
         <div class="cap-row"><div class="cap-lbl"><span>Horas a la semana para contactar leads</span><b id="capHoursV"></b></div>
           <input type="range" id="capHours" min="10" max="126" step="2" value="60" aria-label="Horas de asesor por semana"><small>Los 3 asesores suman 126 horas a la semana, pero no todas son para contactar.</small></div>
       </div>
@@ -1938,17 +1992,6 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
         <h4>Llama a quien lo pide y busca a quien no avanzó</h4>
         <p class="sol-desc">Llama en menos de un minuto a quien pidió contacto inmediato y busca a quienes dejaron sus datos sin avanzar, en la franja definida para su perfil. Confirma interés, identifica dudas y agenda al asesor cuando hace falta.</p>
       </div>
-    </div>
-    <div class="signal-table-wrap" style="margin-top:14px">
-      <table class="signal-table">
-        <thead><tr><th>Tipo de aspirante</th><th>Programas</th><th>Botón principal</th><th>Voz</th><th>Tono</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Joven creativo, muchos menores</strong></td><td>Animación, Musical, Modas</td><td>WhatsApp</td><td>Solo si la pide; con menores, al acudiente</td><td>Identidad y vocación</td></tr>
-          <tr><td><strong>Joven de colegio</strong></td><td>Negocios Int., Mercadeo, Ing. Sistemas</td><td>WhatsApp, con opción de llamada</td><td>Tarde (4 p. m.)</td><td>Aspiración y futuro, más el convenio del colegio</td></tr>
-          <tr><td><strong>Adulto que trabaja</strong></td><td>Adm. Empresas, Adm. Humana, Contaduría, Ing. Industrial y las 3 tecnologías</td><td>Agendar llamada</td><td>Mediodía y después de las 6 p. m.</td><td>Crecimiento laboral, homologación, jornada nocturna</td></tr>
-          <tr><td><strong>Profesional</strong></td><td>Esp. Cultura y Clima</td><td>Agendar llamada</td><td>Horario laboral</td><td>Tono de consultoría</td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 
@@ -2020,6 +2063,43 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
   </div>
 
   <div class="block reveal">
+    <div class="sub-head"><span class="tag">Qué medimos en la landing</span><h3>Del clic al lead en Zoho</h3><p>Cada paso deja un evento en GA4. El envío del formulario se reporta a Meta y a Google y crea el lead en Zoho con todo su origen. Con ese lead se calcula el CPL real.</p></div>
+    <div class="evflow">
+      <div class="ev"><b>1</b><strong>Llega a la landing</strong><code>page_view</code><span>Con programa, versión A o B y UTM</span></div>
+      <div class="ev"><b>2</b><strong>Ve la mitad del video</strong><code>video_50</code><span>Solo en la versión A. Desbloquea el formulario</span></div>
+      <div class="ev"><b>3</b><strong>Empieza el formulario</strong><code>form_start</code><span>Primer campo que toca</span></div>
+      <div class="ev hi"><b>4</b><strong>Envía el formulario</strong><code>lead</code><span>Va a Meta y a Google y crea el lead en Zoho</span></div>
+      <div class="ev"><b>5</b><strong>Elige cómo hablar</strong><code>typ_accion</code><span>WhatsApp, llamada, agenda o después</span></div>
+    </div>
+    <div class="fields">
+      <div class="fcol"><h5>Lo que llena el aspirante</h5><ul>
+        <li><b>Nombre completo</b></li>
+        <li><b>Celular</b><span>10 dígitos, empieza por 3</span></li>
+        <li><b>Correo</b></li>
+        <li><b>Pregunta del programa</b><span>Una por programa, en la clase 6</span></li>
+        <li><b>¿De dónde vienes?</b><span>Muestra el beneficio de su convenio</span></li>
+        <li><b>¿Eres mayor de edad?</b><span>Si no, la llamada va al acudiente</span></li>
+        <li><b>Autorización de datos</b><span>Contacto por llamada y WhatsApp (Ley 1581)</span></li>
+      </ul></div>
+      <div class="fcol"><h5>Lo que viaja oculto</h5><ul>
+        <li><code>programa</code></li>
+        <li><code>variante</code><span>video o formulario</span></li>
+        <li><code>utm_source</code> <code>utm_medium</code><span>Canal: Meta o Google</span></li>
+        <li><code>utm_campaign</code><span>Campaña del programa</span></li>
+        <li><code>utm_content</code><span>Anuncio o ángulo</span></li>
+        <li><code>gclid</code> <code>fbclid</code><span>Identificador del clic</span></li>
+        <li><code>fecha</code> <code>url</code></li>
+      </ul></div>
+      <div class="fcol res"><h5>Lo que queda en Zoho</h5><ul>
+        <li><b>Lead válido</b><span>Único por celular y correo, con datos completos</span></li>
+        <li><b>Origen exacto</b><span>Programa, canal, campaña, anuncio y versión</span></li>
+        <li><b>CPL real</b><span>Inversión de cada campaña ÷ sus leads válidos en Zoho</span></li>
+        <li><b>Botón elegido</b><span>Define la prioridad para el asesor</span></li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="block reveal">
     <div class="sub-head"><span class="tag">Cómo se reparte el tráfico</span><h3>El 50/50 se hace en la landing, no en el anuncio</h3><p>Dividir cada campaña en dos conjuntos con presupuesto separado no funciona con este volumen: Meta necesita unas 50 conversiones por semana en cada conjunto para salir de la fase de aprendizaje, y ningún programa se acerca.</p></div>
     <div class="eje-grid grid-4">
       <div class="eje-card"><div class="eje-num">01</div><h5>Un conjunto, una URL</h5><p>Meta y Google optimizan con todo el presupuesto y todas las conversiones del programa.</p></div>
@@ -2033,7 +2113,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
     <div class="decision-box">
       <p class="eyebrow"><span>REGLA DE DECISIÓN</span></p>
       <h3>Gana la versión que trae aspirantes, no la que trae más formularios</h3>
-      <p>Se lee sumando los 14 programas, con la versión fija en cada lead dentro del CRM. Con la pauta al 100% se decide en unas 2 semanas; al 40%, en unas 3.</p>
+      <p>Se lee sumando los 14 programas, con la versión fija en cada lead dentro del CRM. Con la propuesta del 100% se decide en poco más de una semana; con la del 40%, en unas dos.</p>
       <div class="decision-grid">
         <div class="decision-card"><h4>Métrica que decide</h4><p>Costo por lead contactado o calificado en el CRM. Después, costo por PIN generado.</p><div class="decision-cta">Una versión puede traer menos leads y más matrículas.</div></div>
         <div class="decision-card"><h4>Dos lecturas</h4><p>El total de los 14 programas y la comparación entre creativos y administrativos.</p><div class="decision-cta">Es probable que el video gane en los creativos y el formulario en los de profesionalización.</div></div>
@@ -2073,7 +2153,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
 <!-- 2.6 -->
 <section class="section-light" id="c2-6" data-lesson="2-6">
-  <div class="lesson-head reveal"><span class="lesson-n">Clase 6 · Ángulos de comunicación</span><h2>Catorce programas, catorce conversaciones</h2><p>Cada programa tiene un ángulo principal para la primera pantalla y los anuncios base, dos secundarios para rotar, un elemento propio en la landing y una pregunta en el formulario. Elige un programa.</p></div>
+  <div class="lesson-head reveal"><span class="lesson-n">Clase 6 · Ángulos de comunicación</span><h2>Catorce programas, catorce conversaciones</h2><p>Cada programa tiene un ángulo principal para la primera pantalla y los anuncios base, dos secundarios para rotar, un elemento propio en la landing y una pregunta con respuestas cerradas en el formulario. Elige un programa.</p></div>
   <div class="block reveal">
     <div class="ang">
       <div class="aula-pick" id="angPick"></div>
@@ -2084,11 +2164,7 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 
 <!-- 2.7 -->
 <section class="section-dark" id="c2-7" data-lesson="2-7">
-  <div class="lesson-head reveal"><span class="lesson-n">Clase 7 · Presupuesto</span><h2>Dos propuestas para la misma meta</h2><p>La meta es de 202 matrículas en los 14 programas priorizados. La diferencia entre las dos propuestas es cuánto de esa meta asume la pauta digital: todo o el 40%.</p></div>
-
-  <div class="block reveal">
-    <div class="kpi3" id="kpi3"></div>
-  </div>
+  <div class="lesson-head reveal"><span class="lesson-n">Clase 7 · Presupuesto</span><h2>Dos propuestas para la misma meta</h2><p>La meta de la IUSH para los 14 programas priorizados es de 470 matrículas. Las dos propuestas cambian cuánto de esa meta asume la pauta: todo o el 40%. Cada una incluye la pauta, los agentes, el branding y las landings.</p></div>
 
   <div class="block reveal">
     <div class="sub-head"><span class="tag">Las dos propuestas</span><h3>Elige una para ver el detalle por programa</h3></div>
@@ -2138,25 +2214,25 @@ if('IntersectionObserver' in window){
 
 /* ---------------- datos ---------------- */
 var HIST=[
- ['cre','Animación',[16,13,28,13],33],
- ['cre','Diseño de Modas',[17,14,8,7],10],
- ['cre','Ingeniería de Sistemas',[21,12,11,11],14],
- ['cre','Ingeniería Industrial',[4,14,5,1],6],
- ['cre','Realización y Producción Musical',[9,9,10,7],12],
- ['cre','Tecnología en Sistemas',[21,7,9,3],11],
- ['adm','Administración de Empresas',[23,11,19,7],23],
- ['adm','Administración Humana',[null,null,17,11],20],
- ['adm','Contaduría Pública',[6,9,12,3],14],
- ['adm','Mercadeo',[19,10,14,2],17],
- ['adm','Negocios Internacionales',[16,7,10,7],12],
- ['adm','Tecnología en Gestión de Mercadeo y Ventas',[7,9,8,4],10],
- ['adm','Tecnología en Gestión del Talento Humano',[9,4,10,7],12],
- ['adm','Especialización en Cultura y Clima Organizacional',[7,7,7,1],8]
+ ['cre','Animación',[16,13,28,13],40],
+ ['cre','Diseño de Modas',[17,14,8,7],40],
+ ['cre','Ingeniería de Sistemas',[21,12,11,11],60],
+ ['cre','Ingeniería Industrial',[4,14,5,1],20],
+ ['cre','Realización y Producción Musical',[9,9,10,7],30],
+ ['cre','Tecnología en Sistemas',[21,7,9,3],20],
+ ['adm','Administración de Empresas',[23,11,19,7],60],
+ ['adm','Administración Humana',[null,null,17,11],60],
+ ['adm','Contaduría Pública',[6,9,12,3],20],
+ ['adm','Mercadeo',[19,10,14,2],20],
+ ['adm','Negocios Internacionales',[16,7,10,7],40],
+ ['adm','Tecnología en Gestión de Mercadeo y Ventas',[7,9,8,4],20],
+ ['adm','Tecnología en Gestión del Talento Humano',[9,4,10,7],20],
+ ['adm','Especialización en Cultura y Clima Organizacional',[7,7,7,1],20]
 ];
 var ALERT={'Ingeniería Industrial':1,'Especialización en Cultura y Clima Organizacional':1};
 var SHORT={'Realización y Producción Musical':'Producción Musical','Tecnología en Gestión de Mercadeo y Ventas':'Tec. Mercadeo y Ventas','Tecnología en Gestión del Talento Humano':'Tec. Talento Humano','Especialización en Cultura y Clima Organizacional':'Esp. Cultura y Clima','Administración de Empresas':'Adm. de Empresas','Administración Humana':'Adm. Humana','Negocios Internacionales':'Negocios Int.','Tecnología en Sistemas':'Tec. en Sistemas','Ingeniería de Sistemas':'Ing. de Sistemas','Ingeniería Industrial':'Ing. Industrial'};
 function short(p){return SHORT[p]||p}
-var CPL={'Administración de Empresas':[18000,30000],'Administración Humana':[15000,30000],'Contaduría Pública':[18000,42000],'Mercadeo':[17000,28000],'Negocios Internacionales':[16000,32000],'Tecnología en Gestión de Mercadeo y Ventas':[10000,16000],'Tecnología en Gestión del Talento Humano':[9000,15000],'Especialización en Cultura y Clima Organizacional':[20000,42000],'Animación':[13000,30000],'Diseño de Modas':[11000,25000],'Ingeniería de Sistemas':[15000,28000],'Ingeniería Industrial':[17000,40000],'Realización y Producción Musical':[12000,30000],'Tecnología en Sistemas':[10000,22000]};
+var CPL_REF={'Administración de Empresas':[18000,30000],'Administración Humana':[15000,30000],'Contaduría Pública':[18000,42000],'Mercadeo':[17000,28000],'Negocios Internacionales':[16000,32000],'Tecnología en Gestión de Mercadeo y Ventas':[10000,16000],'Tecnología en Gestión del Talento Humano':[9000,15000],'Especialización en Cultura y Clima Organizacional':[20000,42000],'Animación':[13000,30000],'Diseño de Modas':[11000,25000],'Ingeniería de Sistemas':[15000,28000],'Ingeniería Industrial':[17000,40000],'Realización y Producción Musical':[12000,30000],'Tecnología en Sistemas':[10000,22000]};
 var CONV=0.02, DIAS=114, SHARE_M=0.6; // 60% de la inversión en Meta, 40% en Google
 function n0(x){return Math.round(x).toLocaleString('es-CO')}
 function money(x){return '$'+n0(x)}
@@ -2191,25 +2267,33 @@ function pickerHTML(cls){
   });
   return h+'</div>';
 }
-$('aulaPick').innerHTML=pickerHTML('aula-chip');
+var POS={'Animación':[11,83],'Realización y Producción Musical':[20,68],'Diseño de Modas':[8,58],'Mercadeo':[29,86],'Negocios Internacionales':[41,79],'Ingeniería de Sistemas':[35,57],'Ingeniería Industrial':[53,44],'Administración de Empresas':[67,63],'Administración Humana':[82,53],'Contaduría Pública':[69,39],'Tecnología en Sistemas':[62,20],'Tecnología en Gestión de Mercadeo y Ventas':[77,26],'Tecnología en Gestión del Talento Humano':[89,13],'Especialización en Cultura y Clima Organizacional':[91,76]};
+var MX0=90,MX1=970,MY0=40,MY1=550;
+function mx(x){return MX0+(MX1-MX0)*x/100}
+function my(y){return MY1-(MY1-MY0)*y/100}
 (function(){
-  var h='<div class="spec-line"></div>';
-  Object.keys(COMP).forEach(function(k){h+='<span class="spec-dot" data-c="'+k+'" style="left:'+COMP[k]+'%" title="'+k+'"></span><span class="spec-lbl" data-l="'+k+'" style="left:'+COMP[k]+'%">'+k+'</span>'});
-  h+='<span class="spec-dot me" style="left:'+IUSH_X+'%"></span><span class="spec-lbl me dn3" style="left:'+IUSH_X+'%">IUSH</span>';
-  $('specTrack').innerHTML=h;
+  var cx=mx(50),cy=my(50),h='';
+  h+='<rect x="'+MX0+'" y="'+MY0+'" width="'+(cx-MX0)+'" height="'+(cy-MY0)+'" fill="#fffbe6"/><rect x="'+cx+'" y="'+MY0+'" width="'+(MX1-cx)+'" height="'+(cy-MY0)+'" fill="#f3f5ff"/><rect x="'+MX0+'" y="'+cy+'" width="'+(cx-MX0)+'" height="'+(MY1-cy)+'" fill="#fafaf7"/><rect x="'+cx+'" y="'+cy+'" width="'+(MX1-cx)+'" height="'+(MY1-cy)+'" fill="#eef7f2"/>';
+  h+='<line x1="'+cx+'" y1="'+MY0+'" x2="'+cx+'" y2="'+MY1+'" stroke="#c9c6ba" stroke-dasharray="5 5"/><line x1="'+MX0+'" y1="'+cy+'" x2="'+MX1+'" y2="'+cy+'" stroke="#c9c6ba" stroke-dasharray="5 5"/>';
+  function q(x,y,a,t1,t2){h+='<text x="'+x+'" y="'+y+'" text-anchor="'+a+'" class="mq">'+t1+'</text><text x="'+x+'" y="'+(y+18)+'" text-anchor="'+a+'" class="mq2">'+t2+'</text>'}
+  q(MX0+14,MY0+26,'start','VOCACIÓN','Compite con universidades tradicionales');
+  q(MX1-14,MY0+26,'end','ASCENSO','Título profesional para quien ya trabaja');
+  q(mx(50)+14,MY1-30,'start','RAPIDEZ','Formación para el trabajo');
+  h+='<text x="'+((MX0+MX1)/2)+'" y="'+(MY1+36)+'" text-anchor="middle" class="max">← Joven que sale del colegio · · · Adulto que ya trabaja →</text>';
+  h+='<text transform="translate(30 '+((MY0+MY1)/2)+') rotate(-90)" text-anchor="middle" class="max">← Formación rápida · · · Universidad tradicional →</text>';
+  HIST.forEach(function(r){
+    var p=r[1],P=POS[p],x=mx(P[0]),y=my(P[1]),rad=12+r[3]*0.38,al=ALERT[p],fill=r[0]==='cre'?'#ffd400':'#7894ff';
+    h+='<g class="mb" data-p="'+p+'" tabindex="0" role="button" aria-label="'+p+'"><circle cx="'+x+'" cy="'+y+'" r="'+rad+'" fill="'+fill+'" stroke="'+(al?'#e5484d':'#fff')+'" stroke-width="'+(al?4:2)+'"/><text x="'+x+'" y="'+(y+rad+15)+'" text-anchor="middle" class="ml">'+short(p)+'</text><text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" class="mn">'+r[3]+'</text></g>';
+  });
+  $('mapa').innerHTML=h;
 })();
 function aula(p){
-  var m=MKT[p];
-  each('.aula-chip',function(b){b.classList.toggle('on',b.dataset.p===p)});
-  $('specProg').textContent=short(p);
-  var hits=m.c.slice().sort(function(a,b){return COMP[a]-COMP[b]}),tiers=['up','dn','up2','dn2'];
-  each('#specTrack .spec-dot:not(.me)',function(d){d.classList.toggle('hit',hits.indexOf(d.dataset.c)>-1)});
-  each('#specTrack .spec-lbl:not(.me)',function(l){l.className='spec-lbl';var i=hits.indexOf(l.dataset.l);if(i>-1){l.classList.add('show',hits.length<3?(i%2?'dn':'up'):tiers[i%4])}});
-  var avg=hits.reduce(function(s,k){return s+COMP[k]},0)/hits.length,side=avg>60?'del lado de la universidad tradicional':avg<35?'del lado de la formación rápida y accesible':'en los dos frentes';
-  $('specNote').innerHTML=m.note||('Compite <b>'+side+'</b>. '+(hits.length===1?'Un competidor directo':hits.length+' competidores directos')+' según el documento de mercado de la IUSH.');
-  $('ficha').innerHTML='<div class="ficha-photo">'+ICON[m.tipo]+'</div><div><span class="ficha-k">Ficha del aspirante</span><h4>'+p+'<span class="tipo">'+m.tipo+'</span></h4><dl><dt>Edad</dt><dd>'+m.edad+'</dd><dt>Llega desde</dt><dd>'+m.llega+'</dd><dt>Lo mueve</dt><dd>'+m.motiv+'</dd></dl></div>';
+  var m=MKT[p],g=HIST.filter(function(r){return r[1]===p})[0];
+  each('#mapa .mb',function(b){b.classList.toggle('on',b.dataset.p===p)});
+  $('ficha').innerHTML='<div class="ficha-photo">'+ICON[m.tipo]+'</div><div><span class="ficha-k">Ficha del aspirante</span><h4>'+p+'</h4><span class="tipo" style="margin-left:0">'+m.tipo+'</span>'+(ALERT[p]?'<span class="alert-badge">↓ En descenso</span>':'')+
+    '<dl style="margin-top:12px"><dt>Meta 2027-1</dt><dd>'+g[3]+' matrículas</dd><dt>Edad</dt><dd>'+m.edad+'</dd><dt>Llega desde</dt><dd>'+m.llega+'</dd><dt>Lo mueve</dt><dd>'+m.motiv+'</dd><dt>Compite con</dt><dd class="comp-chips">'+m.c.map(function(c){return '<span>'+c+'</span>'}).join('')+'</dd></dl>'+(m.note?'<p class="fnote">'+m.note+'</p>':'')+'</div>';
 }
-each('.aula-chip',function(b){b.onclick=function(){aula(b.dataset.p)}});
+each('#mapa .mb',function(b){b.onclick=function(){aula(b.dataset.p)};b.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();aula(b.dataset.p)}}});
 aula('Administración de Empresas');
 
 /* ---------------- 1.2 Boletín ---------------- */
@@ -2241,10 +2325,10 @@ $('flipAll').onclick=function(){var any=$('flipMeta').classList.contains('on')&&
 /* ---------------- 2.1 Medición ---------------- */
 var MN=[
  {i:'📣',t:'Anuncio',s:'UTM por programa y canal',ins:'Nomenclatura única de campañas y UTM en cada anuncio de Google y Meta.',mide:'Impresiones, clics y costo por programa.',q:'ADCOM'},
- {i:'🖥️',t:'Landing',s:'Tag Manager y GA4',ins:'Tag Manager en el subdominio de landings, GA4 y el script que asigna la versión A o B.',mide:'Vista con su versión, mitad del video, inicio de formulario y lead enviado.',q:'ADCOM, con Sistemas de la IUSH para el subdominio'},
+ {i:'🖥️',t:'Landing',s:'Tag Manager y GA4',ins:'Tag Manager en el subdominio de landings, GA4 y el script que asigna la versión A o B.',mide:'Vista con su versión, mitad del video, inicio de formulario y envío.',q:'ADCOM, con Sistemas de la IUSH para el subdominio'},
  {i:'📡',t:'Plataformas',s:'Píxel único y etiqueta de Google',ins:'Un solo píxel de Meta con API de conversiones y la etiqueta de Google con conversiones mejoradas.',mide:'El evento Lead, sin duplicados, para que las dos plataformas optimicen con el mismo dato.',q:'ADCOM'},
- {i:'🗂️',t:'Zoho CRM',s:'Campos ocultos en cada lead',ins:'Programa, versión de landing, UTM, identificador del clic, de dónde viene y botón elegido en la página de gracias.',mide:'Contactado, calificado y cita agendada, por programa, canal y versión.',q:'ADCOM y el equipo comercial de la IUSH'},
- {i:'🎓',t:'PIN y matrícula',s:'Cruce con admisiones',ins:'Admisiones comparte qué aspirantes generaron PIN y se matricularon, con el mismo correo o celular del formulario.',mide:'Costo por PIN y costo por matrícula, por programa y canal.',q:'Admisiones y Sistemas de la IUSH'}
+ {i:'🗂️',t:'Zoho CRM',s:'El lead final',ins:'Cada envío crea el lead en Zoho con programa, versión, UTM, identificador del clic, de dónde viene y botón elegido.',mide:'Leads válidos: únicos por celular y correo y con datos completos.',q:'ADCOM y el equipo comercial de la IUSH'},
+ {i:'💲',t:'CPL real',s:'Inversión ÷ leads en Zoho',ins:'Cruce diario de la inversión de cada campaña con los leads válidos que llegaron a Zoho.',mide:'CPL real por programa, canal, anuncio y versión de landing.',q:'ADCOM'}
 ];
 $('mchain').innerHTML=MN.map(function(n,i){return '<button type="button" class="mnode" data-i="'+i+'"><span class="mn">CAPA '+(i+1)+'</span><span class="mi" aria-hidden="true">'+n.i+'</span><strong>'+n.t+'</strong><small>'+n.s+'</small></button>'}).join('');
 function msel(i){each('.mnode',function(b){b.classList.toggle('sel',+b.dataset.i===i)});var n=MN[i];$('mdetail').innerHTML='<div><b>Qué se instala</b><span>'+n.ins+'</span></div><div><b>Qué mide</b><span>'+n.mide+'</span></div><div><b>Quién lo opera</b><span>'+n.q+'</span></div>'}
@@ -2289,62 +2373,78 @@ var PROG={
  'Especialización en Cultura y Clima Organizacional':{aud:'Profesionales mayores de 25 años en talento humano: psicólogos, comunicadores, SST y administradores. Egresados de la IUSH como fuente clave.',a:['La única especialización con este nombre en el país','En 2 semestres lidera cultura, clima y cambio','Egresados IUSH: 20% de descuento y PIN gratis'],el:'Diseño sobrio con perfiles de quién la estudia',q:'Profesión y cargo actual',cta:'Agendar llamada en horario laboral'}
 };
 $('angPick').innerHTML=pickerHTML('ang-chip');
+var QA={
+ 'Animación':['¿Qué te gusta crear?',['Personajes','Animación 2D','3D y modelado','Efectos visuales','Todavía no sé']],
+ 'Diseño de Modas':['¿Qué te llama más de la moda?',['Diseñar prendas','Calzado, joyería o marroquinería','Estilismo y fotografía','Tener mi propia marca']],
+ 'Realización y Producción Musical':['¿Cuál es tu relación con la música?',['Toco un instrumento','Canto','Ya produzco en casa','Estoy empezando']],
+ 'Ingeniería de Sistemas':['¿Qué haces hoy?',['Estoy en el colegio','Ya terminé el colegio','Trabajo','Estudio y trabajo']],
+ 'Tecnología en Sistemas':['¿Ya trabajas en tecnología?',['Sí, en soporte o sistemas','Sí, pero en otra área','No, quiero entrar al sector']],
+ 'Ingeniería Industrial':['¿Trabajas en producción o logística?',['Sí, en producción','Sí, en logística o bodega','Trabajo en otra área','Todavía no trabajo']],
+ 'Administración de Empresas':['¿Tienes título técnico o tecnológico?',['Sí, técnico','Sí, tecnólogo','No, soy bachiller']],
+ 'Administración Humana':['¿Ya trabajas en talento humano?',['Sí, y soy tecnólogo','Sí, pero sin título','No, pero me interesa el área']],
+ 'Contaduría Pública':['¿Trabajas hoy en el área contable?',['Sí, con título técnico o tecnológico','Sí, sin título','No']],
+ 'Mercadeo':['¿Qué te mueve más?',['Las marcas','Las redes sociales','Las ventas','Emprender']],
+ 'Negocios Internacionales':['¿Qué te atrae de los negocios internacionales?',['Importar y exportar','Trabajar con otros países','Tener mi propia empresa','Todavía no sé']],
+ 'Tecnología en Gestión de Mercadeo y Ventas':['¿Trabajas en ventas o servicio al cliente?',['Sí, en ventas','Sí, en servicio al cliente','Trabajo en otra área','No trabajo']],
+ 'Tecnología en Gestión del Talento Humano':['¿Ya trabajas en el área de talento humano?',['Sí, en selección o nómina','Sí, en otra función','No, quiero empezar']],
+ 'Especialización en Cultura y Clima Organizacional':['¿Cuál es tu profesión?',['Psicología','Administración','Comunicación','Seguridad y salud en el trabajo','Otra']]
+};
 function ang(p){
   var x=PROG[p],g=HIST.filter(function(r){return r[1]===p})[0];
   each('.ang-chip',function(b){b.classList.toggle('on',b.dataset.p===p)});
   $('angCard').innerHTML='<article class="vert-card"><div class="vert-head '+(g[0]==='cre'?'a':'b')+'"><div class="vert-tag">'+(g[0]==='cre'?'Ciencias Creativas':'Ciencias Administrativas')+'</div><h4>'+p+'</h4><div class="sub">'+x.aud+'</div><span class="meta-b">META '+g[3]+'</span></div>'+
     '<div class="vert-body"><div class="ang-grid"><div class="main"><b>Ángulo principal</b><span>'+x.a[0]+'</span></div><div><b>Secundario 1</b><span>'+x.a[1]+'</span></div><div><b>Secundario 2</b><span>'+x.a[2]+'</span></div></div>'+
     '<div class="vert-format"><b>Elemento propio</b><span>'+x.el+'</span></div>'+
-    '<div class="vert-format" style="border-top:0;padding-top:8px"><b>Pregunta del formulario</b><span>'+x.q+'</span></div>'+'</div></article>';
+    '<div class="qbox"><b>Pregunta del formulario</b><strong>'+QA[p][0]+'</strong><div class="qopts">'+QA[p][1].map(function(o){return '<span>'+o+'</span>'}).join('')+'</div><small>Además, todas las landings preguntan de dónde viene y si es mayor de edad.</small></div>'+'</div></article>';
 }
 each('.ang-chip',function(b){b.onclick=function(){ang(b.dataset.p)}});
 ang('Animación');
 
 /* ---------------- 2.7 Presupuesto ---------------- */
+// Valores de la pestaña Proyección del forecast: CPL por programa (60% Meta, 40% Google) y costos fijos
+var CPLS={'Administración de Empresas':21429,'Administración Humana':18750,'Contaduría Pública':23333,'Mercadeo':20169,'Negocios Internacionales':20000,'Tecnología en Gestión de Mercadeo y Ventas':11765,'Tecnología en Gestión del Talento Humano':10714,'Animación':16810,'Diseño de Modas':14175,'Ingeniería de Sistemas':18421,'Ingeniería Industrial':22078,'Realización y Producción Musical':15789,'Tecnología en Sistemas':22000,'Especialización en Cultura y Clima Organizacional':25301};
+var EXTRA={brand:12600000,land:7500000,wa:9000000,vmin:1200,minLead:2.25};
 function calc(f){
-  var rows=[],t={m:0,mp:0,l:0,inv:0,im:0,ig:0,lm:0,lg:0};
+  var rows=[],t={m:0,mp:0,l:0,inv:0};
   HIST.forEach(function(r){
-    // parte de los leads que va a Meta para que Meta reciba SHARE_M de la inversión del programa
-    var c=CPL[r[1]],mp=r[3]*f,l=Math.ceil(Math.round(mp/CONV*1e6)/1e6),s=SHARE_M*c[1]/(SHARE_M*c[1]+(1-SHARE_M)*c[0]),avg=s*c[0]+(1-s)*c[1];
-    rows.push({g:r[0],p:r[1],m:r[3],mp:mp,l:l,cm:c[0],cg:c[1],avg:avg,inv:l*avg});
-    t.m+=r[3];t.mp+=mp;t.l+=l;t.inv+=l*avg;t.im+=l*s*c[0];t.ig+=l*(1-s)*c[1];t.lm+=l*s;t.lg+=l*(1-s);
+    var c=CPLS[r[1]],mp=r[3]*f,l=Math.round(mp/CONV),inv=l*c;
+    rows.push({g:r[0],p:r[1],m:r[3],mp:mp,l:l,cpl:c,inv:inv});
+    t.m+=r[3];t.mp+=mp;t.l+=l;t.inv+=inv;
   });
+  t.im=t.inv*SHARE_M;t.ig=t.inv-t.im;t.min=t.l*EXTRA.minLead;t.ia=t.min*EXTRA.vmin;
+  t.total=t.inv+t.ia+EXTRA.wa+EXTRA.brand+EXTRA.land;
   return {rows:rows,t:t};
 }
 var P1=calc(1).t,P4=calc(0.4).t;
-$('kpi3').innerHTML=
-  '<div class="metric-card"><div class="metric-label">CPL promedio</div><div class="metric-value">'+money(P1.inv/P1.l)+'</div><div class="metric-note">Con 60% de la inversión en Meta y 40% en Google, en los 14 programas.</div></div>'+
-  '<div class="metric-card"><div class="metric-label">Conversión que buscamos</div><div class="metric-value">2%</div><div class="metric-note">De lead a matrícula. Se valida con los primeros datos del CRM.</div></div>'+
-  '<div class="metric-card accent"><div class="metric-label">Leads a generar</div><div class="metric-value">'+n0(P1.l)+'</div><div class="metric-note">Con la propuesta del 100%. Con la del 40%, '+n0(P4.l)+'.</div></div>';
 function propHTML(f,t,n,h,desc){
-  var pg=t.ig/t.inv*100,pm=100-pg;
+  var items=[
+    ['Pauta en Google y Meta','Captación por programa · Google '+mill(t.ig)+' y Meta '+mill(t.im),t.inv],
+    ['Agente de voz',n0(t.min)+' minutos, unos 2,25 por lead, a $1.200 el minuto',t.ia],
+    ['Agente de WhatsApp','Primer contacto y seguimiento por chat',EXTRA.wa],
+    ['Branding','Campaña general de marca',EXTRA.brand],
+    ['Landings','Diseño y desarrollo de las landings con prueba A/B',EXTRA.land]
+  ];
   return '<button type="button" class="prop" data-f="'+f+'"><div class="pk"><small>Propuesta '+n+'</small><span class="st"></span></div><h4>'+h+'</h4>'+
-    '<div class="pbig">'+mill(t.inv)+'<small>Inversión en medios · 10 de octubre al 31 de enero</small></div>'+
-    '<dl><div><dt>Leads</dt><dd>'+n0(t.l)+'</dd></div><div><dt>Matrículas pauta</dt><dd>'+t.mp.toLocaleString('es-CO',{maximumFractionDigits:0})+'</dd></div><div><dt>Por día</dt><dd>'+money(t.inv/DIAS)+'</dd></div></dl>'+
-    '<div class="psplit"><div class="g" style="flex:'+pg.toFixed(1)+'">Google '+pg.toFixed(0)+'% · '+mill(t.ig)+'</div><div class="m" style="flex:'+pm.toFixed(1)+'">Meta '+pm.toFixed(0)+'% · '+mill(t.im)+'</div></div>'+
+    '<div class="pbig">'+mill(t.total)+'<small>Inversión total · octubre a enero</small></div>'+
+    '<ul class="pitems">'+items.map(function(i){return '<li><span><b>'+i[0]+'</b><small>'+i[1]+'</small></span><em>'+mill(i[2])+'</em><i style="width:'+(i[2]/t.total*100).toFixed(1)+'%"></i></li>'}).join('')+'</ul>'+
+    '<dl><div><dt>Matrículas pauta</dt><dd>'+n0(t.mp)+'</dd></div><div><dt>Leads</dt><dd>'+n0(t.l)+'</dd></div><div><dt>Minutos de voz</dt><dd>'+n0(t.min)+'</dd></div></dl>'+
     '<p>'+desc+'</p></button>';
 }
 $('propGrid').innerHTML=
-  propHTML(1,P1,1,'La pauta cubre el 100% de la meta','La pauta asume las 202 matrículas. Con este volumen, la prueba de landing se decide en unas 2 semanas.')+
-  propHTML(0.4,P4,2,'La pauta cubre el 40% de la meta','La pauta asume unas '+Math.round(P4.mp)+' matrículas y el resto llega por ferias, colegios y canales propios. La prueba de landing se decide en unas 3 semanas.');
+  propHTML(1,P1,1,'La pauta cubre el 100% de la meta','La pauta asume las '+P1.m+' matrículas que la IUSH se propone para estos 14 programas.')+
+  propHTML(0.4,P4,2,'La pauta cubre el 40% de la meta','La pauta asume '+n0(P4.mp)+' de las '+P4.m+' matrículas. El resto llega por ferias, colegios y canales propios.');
 function render(f){
   var d=calc(f),t=d.t;
   each('.prop',function(b){var on=parseFloat(b.dataset.f)===f;b.classList.toggle('on',on);b.querySelector('.st').textContent=on?'En detalle':'Ver detalle'});
   $('sc-name').textContent=f===1?'Propuesta 1 · 100%':'Propuesta 2 · 40%';
-  var h='<thead><tr><th>Programa</th><th class="num-cell">Meta</th><th class="num-cell">Desde pauta</th><th class="num-cell">Leads</th><th class="num-cell">CPL Meta</th><th class="num-cell">CPL Google</th><th class="num-cell">CPL promedio</th><th class="num-cell">Inversión</th></tr></thead><tbody>';
+  var h='<thead><tr><th>Programa</th><th class="num-cell">Meta IUSH</th><th class="num-cell">Matrículas pauta</th><th class="num-cell">Leads</th><th class="num-cell">CPL</th><th class="num-cell">Inversión en pauta</th></tr></thead><tbody>';
   var last=null;
   d.rows.forEach(function(r){
-    if(r.g!==last){h+='<tr class="group-row"><td colspan="8">'+grp(r.g)+'</td></tr>';last=r.g}
-    h+='<tr><td>'+r.p+'</td><td class="num-cell">'+r.m+'</td><td class="num-cell">'+r.mp.toLocaleString('es-CO',{maximumFractionDigits:1})+'</td><td class="num-cell"><b>'+n0(r.l)+'</b></td><td class="num-cell">'+money(r.cm)+'</td><td class="num-cell">'+money(r.cg)+'</td><td class="num-cell"><b>'+money(r.avg)+'</b></td><td class="num-cell">'+mill(r.inv)+'</td></tr>';
+    if(r.g!==last){h+='<tr class="group-row"><td colspan="6">'+grp(r.g)+'</td></tr>';last=r.g}
+    h+='<tr><td>'+r.p+'</td><td class="num-cell">'+r.m+'</td><td class="num-cell">'+n0(r.mp)+'</td><td class="num-cell"><b>'+n0(r.l)+'</b></td><td class="num-cell">'+money(r.cpl)+'</td><td class="num-cell">'+mill(r.inv)+'</td></tr>';
   });
-  h+='<tr class="total-row"><td>Total</td><td class="num-cell">'+t.m+'</td><td class="num-cell">'+t.mp.toLocaleString('es-CO',{maximumFractionDigits:1})+'</td><td class="num-cell">'+n0(t.l)+'</td><td class="num-cell">'+money(t.im/t.lm)+'</td><td class="num-cell">'+money(t.ig/t.lg)+'</td><td class="num-cell">'+money(t.inv/t.l)+'</td><td class="num-cell">'+mill(t.inv)+'</td></tr></tbody>';
+  h+='<tr class="total-row"><td>Total</td><td class="num-cell">'+t.m+'</td><td class="num-cell">'+n0(t.mp)+'</td><td class="num-cell">'+n0(t.l)+'</td><td class="num-cell">'+money(t.inv/t.l)+'</td><td class="num-cell">'+mill(t.inv)+'</td></tr></tbody>';
   $('t-metas').innerHTML=h;
-}
-function card(pill,logo,h4,desc,v,p,l,cpl){
-  return '<article class="canal-card"><span class="canal-pill">'+pill+'</span><img class="canal-logo" src="'+logo+'" alt=""><h4>'+h4+'</h4><p class="canal-desc">'+desc+'</p>'+
-    '<div class="canal-bar"><i data-w="'+p.toFixed(1)+'"></i></div>'+
-    '<dl class="canal-stats"><div><dt>Inversión</dt><dd>'+mill(v)+'</dd></div><div><dt>Por día</dt><dd>'+money(v/DIAS)+'</dd></div><div><dt>Leads</dt><dd>'+n0(l)+'</dd></div><div><dt>CPL</dt><dd>'+money(cpl)+'</dd></div></dl>'+
-    '<small>'+p.toFixed(0)+'% del presupuesto de medios</small></article>';
 }
 each('.prop',function(b){b.onclick=function(){render(parseFloat(b.dataset.f))}});
 render(1);
