@@ -1616,6 +1616,17 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 .pt-total .pi b{color:var(--yellow);font-size:1rem}
 @media(max-width:700px){.pt-row{grid-template-columns:minmax(0,1.6fr) repeat(2,minmax(0,.8fr)) minmax(0,1fr);gap:8px;font-size:.78rem}.pt-row>span:nth-child(4){display:none}.pt-row .pi i{display:none}}
 .prec{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;background:var(--yellow);color:var(--ink);font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+
+.pt-light .ptable{border-top-color:var(--line-light)}
+.pt-light .pt-row{color:#222;border-bottom-color:#e6e3d8}
+.pt-light .pt-row small{color:#999}
+.pt-light .pt-head{color:#888}
+.pt-light .pt-group{color:#8a7300}
+.pt-light .pt-row .pi i{background:#ffd400}
+.pt-light .pt-row .pi b{color:var(--ink)}
+.pt-light .pt-total{border-top-color:var(--ink);color:var(--ink)}
+.pt-light .pt-total .pi b{color:var(--ink);background:var(--yellow);padding:4px 10px;border-radius:999px}
+.pt-light .ptable{background:#fff;border:1px solid var(--line-light);border-radius:24px;padding:6px 22px 14px}
 </style>
 </head>
 <body>
@@ -2185,12 +2196,18 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
     <div class="prop-grid" id="propGrid"></div>
   </div>
 
+</section>
+
+<section class="section-light pt-light">
   <div class="block reveal">
     <div class="sub-head"><span class="tag">Por programa · <span id="sc-name">Propuesta 1 · 40%</span></span><h3>Leads, CPL e inversión</h3></div>
     <div class="ptable" id="t-metas"></div>
   </div>
 
 
+</section>
+
+<section class="section-dark">
   <div class="block reveal">
     <div class="closing"><h3>Un mismo plan de estudios. Lo que cambia es <em>cuántos aspirantes trae la pauta</em>.</h3><p>Las dos propuestas usan la misma medición, el mismo recorrido, las mismas landings y los mismos ángulos. La decisión es de inversión, no de estrategia.</p></div>
   </div>
