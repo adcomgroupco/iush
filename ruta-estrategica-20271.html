@@ -1543,6 +1543,28 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
 .mchips span{border:1px solid #333;border-radius:999px;padding:7px 12px;font-size:.76rem;color:#ddd;background:#171717}
 .guard p{margin-top:12px;font-size:.84rem;color:#aaa;line-height:1.5}
 .prop dl{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* presupuesto mes a mes */
+.mm-wrap{background:#fff;border:1px solid var(--line-light);border-radius:24px;padding:6px 22px 14px;overflow-x:auto}
+.mm{width:100%;min-width:640px;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.86rem;color:#222}
+.mm th,.mm td{padding:11px 6px;border-bottom:1px solid #e6e3d8;text-align:right;white-space:nowrap}
+.mm th:first-child,.mm td:first-child{text-align:left;white-space:normal}
+.mm thead th{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#888;padding-top:16px}
+.mm td small{display:block;font-size:.72rem;color:#999;margin-top:2px}
+.mm .mm-g td{padding:18px 6px 6px;font-size:.62rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8a7300;border-bottom:0}
+.mm .mm-sub td{font-weight:800;background:#faf8f0}
+.mm .mm-tot td{font-weight:900;color:var(--ink);border-top:1px solid var(--ink);border-bottom:0}
+.mm .mm-tot td:last-child b{background:var(--yellow);padding:4px 10px;border-radius:999px}
+.mm td .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.mm-curve{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.mm-curve div{background:#fff;border:1px solid var(--line-light);border-radius:18px;padding:14px 16px}
+.mm-curve small{display:block;font-size:.62rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#888}
+.mm-curve b{display:block;font-size:1.5rem;font-weight:900;letter-spacing:-.03em;margin-top:6px;color:var(--ink)}
+.mm-curve i{display:block;height:5px;border-radius:3px;background:var(--yellow);margin-top:10px}
+.mm-curve span{display:block;font-size:.74rem;color:#777;margin-top:6px}
+@media(max-width:700px){.mm-curve{grid-template-columns:1fr 1fr}}
+.mm-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:22px}
+.mm-actions p{font-size:.84rem;color:var(--muted-light);max-width:60ch;line-height:1.5}
+.button-dl{background:var(--ink);color:var(--yellow);border-color:var(--ink)}
 
 /* v3: mapa del aula, medición en landing, preguntas y presupuesto total */
 .mapa{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:16px;align-items:start}
@@ -2204,6 +2226,21 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:24px clamp(20
     <div class="ptable" id="t-metas"></div>
   </div>
 
+  <div class="block reveal">
+    <div class="sub-head"><span class="tag">Mes a mes · <span id="mm-name">Propuesta 1 · 40%</span></span><h3>Cómo se invierte de octubre a enero</h3><p>La pauta y el agente de voz siguen la curva de inscripciones: arrancan suave en octubre y se concentran en noviembre y diciembre. El agente de WhatsApp y las landings se pagan en octubre, antes de que llegue el primer lead.</p></div>
+    <div class="mm-curve" id="mm-curve"></div>
+    <div class="mm-wrap"><table class="mm" id="mm-items"></table></div>
+  </div>
+
+  <div class="block reveal">
+    <div class="sub-head"><span class="tag">Por canal</span><h3>60% Meta, 40% Google en la captación</h3><p>Google atiende a quien ya busca qué estudiar y Meta encuentra a quien todavía no. La campaña de branding va completa en Meta, porque en Google solo usamos búsqueda.</p></div>
+    <div class="mm-wrap"><table class="mm" id="mm-canal"></table></div>
+    <div class="mm-actions">
+      <a class="button button-dl" href="assets/docs/Presupuesto_IUSH_2027-1_Escenarios.xlsx" download>Descargar presupuesto en Excel ↓</a>
+      <p>Trae las dos propuestas en pestañas separadas, con cada ítem y cada canal mes a mes.</p>
+    </div>
+  </div>
+
 
 </section>
 
@@ -2435,6 +2472,10 @@ ang('Animación');
 // Valores de la pestaña Proyección del forecast: CPL por programa (60% Meta, 40% Google) y costos fijos
 var CPLS={'Administración de Empresas':21429,'Administración Humana':18750,'Contaduría Pública':23333,'Mercadeo':20169,'Negocios Internacionales':20000,'Tecnología en Gestión de Mercadeo y Ventas':11765,'Tecnología en Gestión del Talento Humano':10714,'Animación':16810,'Diseño de Modas':14175,'Ingeniería de Sistemas':18421,'Ingeniería Industrial':22078,'Realización y Producción Musical':15789,'Tecnología en Sistemas':22000,'Especialización en Cultura y Clima Organizacional':25301};
 var EXTRA={brand:12600000,land:7500000,wa:9000000,vmin:1200,minLead:2.25};
+// Campaña general de toda la oferta: igual en las dos propuestas
+var GEN={p:'Campaña general · toda la oferta',m:13,l:625,cpl:16000,inv:10000000};
+// Curva mensual oct-ene (pestaña Proyección). WhatsApp y landings se pagan en octubre.
+var MESES=['Octubre','Noviembre','Diciembre','Enero'],CURVE=[.15,.30,.30,.25],FIRST=[1,0,0,0];
 function calc(f){
   var rows=[],t={m:0,mp:0,l:0,inv:0};
   HIST.forEach(function(r){
@@ -2442,6 +2483,7 @@ function calc(f){
     rows.push({g:r[0],p:r[1],m:r[3],mp:mp,l:l,cpl:c,inv:inv});
     t.m+=r[3];t.mp+=mp;t.l+=l;t.inv+=inv;
   });
+  t.gen=GEN;t.mp+=GEN.m;t.l+=GEN.l;t.inv+=GEN.inv;
   t.im=t.inv*SHARE_M;t.ig=t.inv-t.im;t.min=t.l*EXTRA.minLead;t.ia=t.min*EXTRA.vmin;
   t.total=t.inv+t.ia+EXTRA.wa+EXTRA.brand+EXTRA.land;
   return {rows:rows,t:t};
@@ -2449,10 +2491,10 @@ function calc(f){
 var P1=calc(1).t,P4=calc(0.4).t;
 function propHTML(f,t,n,h,desc){
   var items=[
-    ['Pauta en Google y Meta','Captación por programa · Google '+mill(t.ig)+' y Meta '+mill(t.im),t.inv],
+    ['Pauta en Google y Meta','14 programas y campaña general · Google '+mill(t.ig)+' y Meta '+mill(t.im),t.inv],
     ['Agente de voz',n0(t.min)+' minutos, unos 2,25 por lead, a $1.200 el minuto',t.ia],
     ['Agente de WhatsApp','Primer contacto y seguimiento por chat',EXTRA.wa],
-    ['Branding','Campaña general de marca',EXTRA.brand],
+    ['Branding','Campaña de marca en Meta',EXTRA.brand],
     ['Landings','Diseño y desarrollo de las landings con prueba A/B',EXTRA.land]
   ];
   return '<button type="button" class="prop" data-f="'+f+'"><div class="pk"><small>Propuesta '+n+'</small><span class="st"></span></div>'+(f===0.4?'<span class="prec">★ Propuesta recomendada</span>':'')+'<h4>'+h+'</h4>'+
@@ -2462,8 +2504,8 @@ function propHTML(f,t,n,h,desc){
     '<p>'+desc+'</p></button>';
 }
 $('propGrid').innerHTML=
-  propHTML(0.4,P4,1,'La pauta cubre el 40% de la meta','La pauta asume '+n0(P4.mp)+' de las '+P4.m+' matrículas. El resto llega por ferias, colegios y canales propios.')+
-  propHTML(1,P1,2,'La pauta cubre el 100% de la meta','La pauta asume las '+P1.m+' matrículas que la IUSH se propone para estos 14 programas.');
+  propHTML(0.4,P4,1,'La pauta cubre el 40% de la meta','La pauta asume '+n0(P4.mp-GEN.m)+' de las '+P4.m+' matrículas de los 14 programas, más '+GEN.m+' de la campaña general. El resto llega por ferias, colegios y canales propios.')+
+  propHTML(1,P1,2,'La pauta cubre el 100% de la meta','La pauta asume las '+P1.m+' matrículas que la IUSH se propone para estos 14 programas, más '+GEN.m+' de la campaña general.');
 function render(f){
   var d=calc(f),t=d.t;
   each('.prop',function(b){var on=parseFloat(b.dataset.f)===f;b.classList.toggle('on',on);b.querySelector('.st').textContent=on?'En detalle':'Ver detalle'});
@@ -2474,8 +2516,43 @@ function render(f){
     if(r.g!==last){h+='<div class="pt-group">'+grp(r.g)+'</div>';last=r.g}
     h+='<div class="pt-row"><span class="pn">'+r.p+'</span><span>'+n0(r.mp)+'<small> de '+r.m+'</small></span><span>'+n0(r.l)+'</span><span>'+money(r.cpl)+'</span><span class="pi"><i style="width:'+(r.inv/mx*100).toFixed(1)+'%"></i><b>'+mill(r.inv)+'</b></span></div>';
   });
-  h+='<div class="pt-row pt-total"><span class="pn">Total</span><span>'+n0(t.mp)+'<small> de '+t.m+'</small></span><span>'+n0(t.l)+'</span><span>'+money(t.inv/t.l)+'</span><span class="pi"><b>'+mill(t.inv)+'</b></span></div>';
+  h+='<div class="pt-group">Toda la oferta</div><div class="pt-row"><span class="pn">'+GEN.p+'</span><span>'+GEN.m+'</span><span>'+n0(GEN.l)+'</span><span>'+money(GEN.cpl)+'</span><span class="pi"><i style="width:'+(GEN.inv/mx*100).toFixed(1)+'%"></i><b>'+mill(GEN.inv)+'</b></span></div>';
+  h+='<div class="pt-row pt-total"><span class="pn">Total</span><span>'+n0(t.mp)+'<small> de '+(t.m+GEN.m)+'</small></span><span>'+n0(t.l)+'</span><span>'+money(t.inv/t.l)+'</span><span class="pi"><b>'+mill(t.inv)+'</b></span></div>';
   $('t-metas').innerHTML=h;
+  mensual(f,t);
+}
+function mensual(f,t){
+  $('mm-name').textContent=f===1?'Propuesta 2 · 100%':'Propuesta 1 · 40%';
+  function sp(v,dist){return dist.map(function(p){return v*p})}
+  var items=[
+    ['Pauta de captación','Google y Meta, por programa',sp(t.inv,CURVE)],
+    ['Branding','Campaña de marca en Meta',sp(EXTRA.brand,CURVE)],
+    ['Agente de voz','Sigue el volumen de leads',sp(t.ia,CURVE)],
+    ['Agente de WhatsApp','Implementación en octubre',sp(EXTRA.wa,FIRST)],
+    ['Landings','Desarrollo antes del lanzamiento',sp(EXTRA.land,FIRST)]
+  ];
+  var tot=[0,0,0,0];items.forEach(function(i){i[2].forEach(function(v,k){tot[k]+=v})});
+  var gt=tot.reduce(function(a,b){return a+b},0),leads=sp(t.l,CURVE);
+  $('mm-curve').innerHTML=MESES.map(function(m,k){return '<div><small>'+m+'</small><b>'+mill(tot[k])+'</b><i style="width:'+(tot[k]/Math.max.apply(null,tot)*100).toFixed(0)+'%"></i><span>'+(tot[k]/gt*100).toFixed(0)+'% del total · '+n0(leads[k])+' leads</span></div>'}).join('');
+  function head(first){return '<thead><tr><th>'+first+'</th>'+MESES.map(function(m){return '<th>'+m.slice(0,3)+'</th>'}).join('')+'<th>Total</th></tr></thead>'}
+  function row(name,sub,v,cls,dot){var s=v.reduce(function(a,b){return a+b},0);return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+(dot?'<span class="dot" style="background:'+dot+'"></span>':'')+name+(sub?'<small>'+sub+'</small>':'')+'</td>'+v.map(function(x){return '<td>'+(x?mill(x):'—')+'</td>'}).join('')+'<td><b>'+mill(s)+'</b></td></tr>'}
+  var h=head('Ítem')+'<tbody>';
+  items.forEach(function(i){h+=row(i[0],i[1],i[2])});
+  h+=row('Total inversión','',tot,'mm-tot')+'</tbody>';
+  $('mm-items').innerHTML=h;
+  var cap=sp(t.inv,CURVE),br=sp(EXTRA.brand,CURVE);
+  var mC=cap.map(function(v){return v*SHARE_M}),gC=cap.map(function(v){return v*(1-SHARE_M)}),mT=mC.map(function(v,k){return v+br[k]});
+  var pa=mT.map(function(v,k){return v+gC[k]}),ps=pa.reduce(function(a,b){return a+b},0),ms=mT.reduce(function(a,b){return a+b},0);
+  var c=head('Canal')+'<tbody>';
+  c+='<tr class="mm-g"><td colspan="6">Meta Ads · '+(ms/ps*100).toFixed(0)+'% de la pauta</td></tr>';
+  c+=row('Captación','60% de la pauta por programa',mC,'',  '#315cff');
+  c+=row('Branding','Campaña de marca',br,'','#7894ff');
+  c+=row('Total Meta','',mT,'mm-sub');
+  c+='<tr class="mm-g"><td colspan="6">Google Ads Búsqueda · '+((ps-ms)/ps*100).toFixed(0)+'% de la pauta</td></tr>';
+  c+=row('Captación','40% de la pauta por programa',gC,'','#ffd400');
+  c+=row('Total Google','',gC,'mm-sub');
+  c+=row('Total pauta','',pa,'mm-tot')+'</tbody>';
+  $('mm-canal').innerHTML=c;
 }
 each('.prop',function(b){b.onclick=function(){render(parseFloat(b.dataset.f))}});
 render(0.4);
