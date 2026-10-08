@@ -58,6 +58,41 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);min-height:100vh;colo
 .main{max-width:1200px;margin:0 auto;padding:22px 20px 80px;display:flex;flex-direction:column;gap:14px}
 .intro{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;font-size:12.5px;color:var(--t2);line-height:1.65}
 .intro b{color:var(--black)}
+/* GUÍA */
+.guia{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.guia>summary{list-style:none;cursor:pointer;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:3px solid var(--yellow)}
+.guia>summary::-webkit-details-marker{display:none}
+.guia>summary h2{font-size:15px;font-weight:700}
+.guia>summary span{font-size:12px;font-weight:600;color:var(--t3)}
+.guia[open]>summary span .c{display:none}.guia:not([open])>summary span .o{display:none}
+.g-body{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:28px;padding:22px 20px}
+.n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--yellow);color:var(--black);font-size:12px;font-weight:700;flex-shrink:0;box-shadow:0 0 0 2px #fff}
+.post{border:1px solid var(--border);border-radius:var(--radius-sm);background:#fff;overflow:hidden;font-size:12.5px}
+.post-h{display:flex;align-items:center;gap:9px;padding:10px 12px}
+.av{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.post-h b{font-size:12.5px;display:block}.post-h small{font-size:11px;color:var(--t3)}
+.post-out{padding:0 12px 10px;color:var(--t2);line-height:1.5;position:relative}
+.post-out .n,.img .n{position:absolute}
+.post-out .n{right:8px;top:-4px}
+.img{position:relative;aspect-ratio:4/5;background:radial-gradient(120% 80% at 80% 10%,#8a2bb8 0%,#601082 45%,#163073 100%);color:#fff;padding:18px 16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.img::after{content:"";position:absolute;right:-40px;bottom:40px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.08)}
+.img .ph{position:absolute;right:14px;top:44%;font-size:10px;color:rgba(255,255,255,.55);text-align:right;line-height:1.3}
+.img .logo-i{font-size:11px;font-weight:700;letter-spacing:.04em;opacity:.9}
+.img .pz{font-size:21px;font-weight:700;line-height:1.2;max-width:88%;position:relative;z-index:1}
+.img .lb{display:inline-block;background:var(--yellow);color:var(--black);font-size:11px;font-weight:700;padding:5px 9px;position:relative;z-index:1}
+.img .bnf{font-size:10.5px;line-height:1.35;opacity:.92;margin-top:8px;max-width:92%;position:relative;z-index:1}
+.post-f{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;background:#F0F2F5}
+.post-f small{font-size:10.5px;color:var(--t3);display:block}.post-f b{font-size:12px}
+.post-f .btn{background:#E4E6EB;font-size:12px;font-weight:600;padding:7px 12px;border-radius:6px;white-space:nowrap}
+.leg{display:flex;flex-direction:column;gap:12px}
+.leg h3{font-size:13px;font-weight:700;margin-bottom:2px}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--t2);line-height:1.55}
+.li b{color:var(--black)}
+.otros{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.otros>div{border-radius:var(--radius-sm);padding:10px 12px;font-size:12px;line-height:1.5;color:var(--t2)}
+.pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.pasos div{background:var(--bg);border-radius:var(--radius-sm);padding:10px;font-size:12px;line-height:1.45;color:var(--t2)}
+.pasos div b{display:block;font-size:18px;color:var(--black);line-height:1.1;margin-bottom:3px}
 .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px;color:var(--t3)}
 .spinner{width:40px;height:40px;border:3px solid #eee;border-top-color:#7d6800;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -146,7 +181,9 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);min-height:100vh;colo
 .ybar{height:4px;background:var(--yellow);margin:20px -40px 0;border-radius:0 0 var(--radius) var(--radius)}
 
 @media(max-width:760px){
-  .meta-g,.goog-g,.land-g,.shared{grid-template-columns:1fr}
+  .meta-g,.goog-g,.land-g,.shared,.g-body,.otros{grid-template-columns:1fr}
+  .pasos{grid-template-columns:1fr 1fr}
+  .g-body{padding:16px 14px}
   .fbar{padding:10px 14px;gap:10px;position:static}
   .hdr{padding:0 14px}
   .hdr-r .pill-w{display:none}
@@ -164,6 +201,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);min-height:100vh;colo
   .nota,.shared{margin-left:14px;margin-right:14px}
 }
 </style>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
 </head>
 <body>
 
@@ -355,9 +393,48 @@ function blockHTML(p, i, b) {
   </div>`;
 }
 
+const GUIA = `<details class="guia" id="guia" open>
+  <summary><h2>Cómo leer y revisar cada programa</h2><span><i class="o">Ocultar guía ▴</i><i class="c">Ver guía ▾</i></span></summary>
+  <div class="g-body">
+    <div class="post" aria-label="Ejemplo de anuncio en Meta">
+      <div class="post-h"><div class="av">IUSH</div><div><b>IU Salazar y Herrera</b><small>Publicidad</small></div></div>
+      <div class="post-out"><span class="n">1</span>Llevas años llenando cuadernos de personajes. En Animación de la IUSH aprendes a darles vida con narrativa visual, guion gráfico, 2D, 3D y efectos visuales… <b>Ver más</b></div>
+      <div class="img">
+        <div class="logo-i">IU SALAZAR Y HERRERA</div>
+        <div class="ph">Fotografía o<br>ilustración<br>de la pieza</div>
+        <div class="pz" style="padding-left:22px"><span class="n" style="left:-6px;top:2px">2</span>Lo que hoy dibujas en tu cuaderno puede convertirse en tu profesión.</div>
+        <div style="padding-left:22px;position:relative;z-index:1"><span class="n" style="left:-6px;top:1px">3</span><span class="lb">Animación | 10 semestres | Presencial</span><div class="bnf" style="position:relative"><span class="n" style="left:-28px;top:0">4</span>Puedes financiar tu matrícula con CrediSalazarYHerrera, Comfama, ICETEX, Sapiencia y otras entidades aliadas.</div></div>
+      </div>
+      <div class="post-f"><div><small>iush.edu.co</small><b>Inscripciones 2027-1</b></div><span class="btn">Más información</span></div>
+    </div>
+    <div class="leg">
+      <div><h3>Qué es cada texto del anuncio en Meta</h3></div>
+      <div class="li"><span class="n">1</span><div><b>Copy out.</b> El texto que va encima de la imagen, en la publicación. Cuenta el ángulo completo y cierra con la invitación a dejar los datos.</div></div>
+      <div class="li"><span class="n">2</span><div><b>Copy pieza.</b> La frase principal dentro de la imagen. Es lo primero que se lee, por eso es corta: entre 60 y 100 caracteres.</div></div>
+      <div class="li"><span class="n">3</span><div><b>Labels.</b> Programa, duración y modalidad. Son iguales en las tres piezas del programa.</div></div>
+      <div class="li"><span class="n">4</span><div><b>Beneficio.</b> Descuento por convenio o financiación. También se repite en las tres piezas.</div></div>
+      <div class="otros">
+        <div class="bm" style="border:1px solid var(--meta-brd)"><b style="color:var(--black)">Tres ángulos por programa.</b> Cada uno es una pieza distinta con su copy out y su copy pieza; se revisan por separado.</div>
+        <div class="bg" style="border:1px solid var(--google-brd)"><b style="color:var(--black)">Google.</b> Títulos de máximo 30 caracteres y descripciones de máximo 90. Google los combina solo.</div>
+        <div class="bl" style="border:1px solid var(--land-brd);grid-column:1/-1"><b style="color:var(--black)">Landing.</b> La pregunta y las respuestas que verá el aspirante en el formulario, más el elemento propio de la página.</div>
+      </div>
+      <div><h3 style="margin-top:6px">Cómo revisar</h3>
+        <div class="pasos">
+          <div><b>1</b>Lee cada bloque del programa.</div>
+          <div><b>2</b>Marca Aprobar o Rechazar.</div>
+          <div><b>3</b>Si rechazas, escribe qué cambiar.</div>
+          <div><b>4</b>Da Enviar. Queda guardado.</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--t3);line-height:1.5">El recuadro amarillo <b>Por validar</b> señala datos que necesitamos que la IUSH confirme. Los programas marcados <b>No priorizado</b> no tienen pauta prevista en la ruta, pero quedan listos por si se activan.</p>
+    </div>
+  </div>
+</details>`;
+
 function build() {
   const main = document.getElementById('main');
-  let html = `<div class="intro"><b>Cómo revisar.</b> Cada programa tiene cinco bloques: los tres ángulos de Meta (copy out y copy de la pieza), los anuncios de Google Search y la pregunta del formulario de la landing. Aprueba o rechaza cada bloque y deja tu comentario; se guarda en el Sheet al dar Enviar. Los programas marcados como <b>No priorizado</b> no tienen pauta prevista en la ruta, pero se dejan listos por si se activan.</div>`;
+  const g = document.getElementById('guia');
+  let html = GUIA.replace(' open>', g && !g.open ? '>' : ' open>');
   let count = 0;
   DATA.forEach((p, i) => {
     if (F.escuela !== 'all' && p.escuela !== F.escuela) return;
