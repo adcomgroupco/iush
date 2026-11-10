@@ -232,9 +232,9 @@ tr.nv-det td{background:var(--gray-50);padding:10px 14px}
       </div>
       <div class="tscroll"><table><thead id="det-head"></thead><tbody id="det-body"></tbody></table></div>
       <div class="foot-note">
-        <b>Todo el histórico entra siempre</b> (se ve con las fechas libres): la inversión sale de FB_IUSH y GG_IUSH y el CRM de CRM_POSIBLES_ASPIRANTES y CRM_OPORTUNIDADES (pestaña RESUMEN GENERAL), tengan o no meta. Las campañas anteriores a 2027-1 quedan en «Histórico (sin homologar)» y los leads sin programa en «Sin programa».
+        <b>Todo el histórico entra siempre</b> (se ve con las fechas libres): la inversión sale de FB_IUSH y GG_IUSH y el CRM de CRM_POSIBLES_ASPIRANTES y CRM_OPORTUNIDADES (pestaña RESUMEN GENERAL), tengan o no meta. Las campañas anteriores a 2027-1 quedan en «Histórico (sin homologar)» (inversión sin UTM de 2027-1).
         <b>Metas</b>: solo las del periodo 2027-1 (pestaña METAS) y las mensuales (MENSUAL). Con el botón «Meta 2027-1» encendido se toma la meta total del periodo; apagado, la parte que corresponde a las fechas según la curva mensual del forecast (el periodo 2027-1 corre del 1-nov-2026 al 31-ene-2027; la pauta se encendió el 4-nov). Lo logrado se cuenta siempre por las fechas elegidas.
-        <b>Costos y cumplimiento</b> usan solo los leads, inscritos, admitidos y matrículas de pauta (medio Facebook o Google); «Leads CRM» y las etapas muestran todas las fuentes. <b>Matrículas</b>: por la fecha en que se matricularon. <b>Admitidos</b> e <b>inscritos</b>: por su fecha. <b>Convertidos</b>: aspirantes que pasaron a oportunidad, por la fecha de creación del lead.
+        <b>Solo pauta</b>: el resumen, el embudo, «Por nivel», la evolución y esta tabla cuentan únicamente leads, inscritos, admitidos y matrículas con UTM de Facebook o Google, porque lo que llega sin UTM (web, sistema académico, base histórica) no es conversión de pauta. Lo «sin UTM» se ve en «Por nivel y medio», en las tarjetas por medio y en «Pauta vs otras fuentes», o eligiéndolo en el filtro de medio. <b>Matrículas</b>: por la fecha en que se matricularon. <b>Admitidos</b> e <b>inscritos</b>: por su fecha. <b>Convertidos</b>: aspirantes que pasaron a oportunidad, por la fecha de creación del lead.
         La fila «Branding» y «General» muestran solo meta (aún no hay campañas con ese nombre).
       </div>
     </div>
@@ -391,8 +391,11 @@ function F(){ const g = id => document.getElementById(id).value;
   return { desde: g('f-desde'), hasta: g('f-hasta'), niv: g('f-nivel'), medio: g('f-medio'), prog: g('f-programa') } }
 const enRango = (r, f) => r.d >= f.desde && r.d <= f.hasta;
 const pasa = (r, f) => enRango(r, f) && (!f.niv || r.niv === f.niv) && (!f.medio || r.medio === f.medio);
+// El resumen y los bloques de resultados cuentan solo pauta (medio con UTM de Facebook o Google): lo «sin UTM» no es conversión de pauta.
+// Sigue visible en «Por nivel y medio», en las tarjetas por medio y en «Pauta vs otras fuentes», o eligiéndolo en el filtro de medio.
+const pasaPauta = (r, f) => pasa(r, f) && (f.medio || PAUTA.includes(r.medio));
 function cascade(){
-  const f = F(), base = RAW.filter(r => pasa(r, f));
+  const f = F(), base = RAW.filter(r => pasaPauta(r, f));
   fill('f-programa', [...new Set(base.map(r => r.pk))].sort((x, y) => D(x).localeCompare(D(y))), f.prog, D);
 }
 function resetFilters(){ ['f-nivel','f-medio','f-programa'].forEach(id => document.getElementById(id).value = ''); document.getElementById('q').value = ''; setQuick('mes') }
@@ -406,7 +409,7 @@ function M(e){ return { ...e, dif: e.lp ? e.lcP/e.lp - 1 : null, cplP: div(e.inv
 // Entradas por nivel·programa (con metas), luego filtro de programa
 function entradas(f){
   const E = {}, get = (niv, pk) => { const k = niv + '|' + pk; return E[k] = E[k] || { ...Z(), niv, pk } };
-  RAW.forEach(r => { if(pasa(r, f)) add(get(r.niv, r.pk), r) });
+  RAW.forEach(r => { if(pasaPauta(r, f)) add(get(r.niv, r.pk), r) });
   if(!f.medio) METAS.forEach(m => {
     if(m.per !== META_PER) return; if(f.niv && m.niv !== f.niv) return;
     const s = share(m, f); if(!s) return;
@@ -422,7 +425,8 @@ function metaMensual(a, b, niv){
     const x = a > ini ? a : ini, y = b < fin ? b : fin; if(x > y) return;
     const s = days(x, y) / days(ini, fin); out.pm += m.ppto * s; out.lmm += m.lm * s });
   return out }
-function filasRango(f){ return RAW.filter(r => pasa(r, f) && (!f.prog || r.pk === f.prog)) }
+function filasRango(f){ return RAW.filter(r => pasa(r, f) && (!f.prog || r.pk === f.prog)) }       // todos los medios (desglose por medio)
+function filasPauta(f){ return RAW.filter(r => pasaPauta(r, f) && (!f.prog || r.pk === f.prog)) }  // solo pauta (evolución)
 
 // ── Render ───────────────────────────────────────────────────────────────────
 let ENT = [];
@@ -432,8 +436,8 @@ function render(){
   document.querySelectorAll('.qbtn[data-mt]').forEach(b => b.classList.toggle('on', META_TOTAL));
   ENT = entradas(f);
   const T = M(ENT.reduce((a, e) => add(a, e), Z()));
-  document.getElementById('rango-note').textContent = `${fDate(f.desde)} ${f.desde.slice(0,4)} – ${fDate(f.hasta)} ${f.hasta.slice(0,4)} · ${days(f.desde, f.hasta)} días`;
-  document.getElementById('embudo-note').textContent = 'inscritos, admitidos y matrículas por su propia fecha · costo por etapa sobre el volumen de pauta';
+  document.getElementById('rango-note').textContent = `${fDate(f.desde)} ${f.desde.slice(0,4)} – ${fDate(f.hasta)} ${f.hasta.slice(0,4)} · ${days(f.desde, f.hasta)} días · solo pauta (UTM de Facebook o Google); lo demás está en «Por medio» y «Pauta vs otras fuentes»`;
+  document.getElementById('embudo-note').textContent = 'solo pauta (leads con UTM de Facebook o Google) · inscritos, admitidos y matrículas por su propia fecha';
   renderKPIs(T); renderMedios(f); renderFunnel(T); renderFuentes(f); renderNivel(); renderMedio(f); renderSemana(f); renderDetalle();
 }
 
@@ -445,7 +449,7 @@ function renderKPIs(T){
   document.getElementById('kpi-grid').innerHTML = [
     k('Inversión total', fCOP(T.inv), 'Meta Ads + Google Ads', bar(div(T.inv, T.ppto), (META_TOTAL ? 'Ejecución vs presupuesto del periodo ' : 'Ejecución vs presupuesto según la curva ') + fCOP(T.ppto))),
     k('Registros plataforma', fN(T.lp), 'CPL plataforma ' + fCOP(T.cplP)),
-    k('Leads CRM', fN(T.lc), `${fN(T.lcP)} de pauta · <span class="${difCls(T.dif)}">${T.dif === null ? '' : (T.dif > 0 ? '+' : '') + fP(T.dif) + ' vs plataforma'}</span>`, bar(T.cumL, 'Meta ' + fN(T.lm))),
+    k('Leads CRM', fN(T.lc), `<span class="${difCls(T.dif)}">${T.dif === null ? '' : (T.dif > 0 ? '+' : '') + fP(T.dif) + ' vs plataforma'}</span>`, bar(T.cumL, 'Meta ' + fN(T.lm))),
     k('CPL CRM', fCOP(T.cplC), cplMeta ? 'CPL meta ' + fCOP(cplMeta) : 'sobre leads CRM de pauta'),
     k('Convertidos a aspirante', fN(T.cv), fP(T.cvr) + ' de los leads CRM'),
     k('Inscritos', fN(T.ins), fP(div(T.ins, T.cv)) + ' de los convertidos'),
@@ -555,7 +559,7 @@ let OPEN_EVO = {};
 function togEvo(k){ OPEN_EVO[k] = !OPEN_EVO[k]; renderSemana(F()) }
 function setEvo(k){ EVO = k; document.querySelectorAll('[data-ev]').forEach(b => b.classList.toggle('on', b.dataset.ev === k)); renderSemana(F()) }
 function renderSemana(f){
-  const mes = EVO === 'mes', rows = filasRango(f);
+  const mes = EVO === 'mes', rows = filasPauta(f);
   const g = groupRows(rows, r => mes ? r.d.slice(0,7) : weekStart(r.d)), ks = Object.keys(g).sort();
   // metas mensuales: por nivel; con filtro de medio o programa no aplican
   const conMeta = !f.medio && !f.prog;
