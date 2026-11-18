@@ -842,7 +842,7 @@ function renderFunFuente() {
       const n = et.map(e => xs.filter(x => x.i >= idx(e)).length);
       const chica = !tot && xs.length < MUESTRA_MIN;
       const pL = pct(n[0], nL);
-      return `<tr class="${tot ? 'tr-total' : ''}"><td>${esc(k)}${chica && xs.length ? ' <span class="tag-chica">muestra pequeña</span>' : ''}</td>` +
+      return `<tr class="${tot ? 'tr-total' : ''}"><td>${esc(k)}</td>` +
         `<td class="r grp">${nL ? fmt(nL) : '<span class="t-mute">—</span>'}</td>` +
         `<td class="r grp"><b>${fmt(n[0])}</b></td><td class="r">${nL ? `<span class="${n[0] ? '' : 'c-r'}">${pL < 1 && n[0] ? pL.toFixed(2).replace('.', ',') + ' %' : fp(n[0], nL)}</span>` : '—'}</td>` +
         n.slice(1).map((v, j) => `<td class="r grp">${fmt(v)}</td><td class="r"><span class="${n[j] ? colorConv(pct(v, n[j]), chica) : 't-mute'}">${n[j] ? fp(v, n[j]) : '—'}</span></td>`).join('') +
