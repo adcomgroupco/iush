@@ -212,6 +212,13 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
 .anom-t th{text-align:left !important;font-weight:700;color:var(--fg-muted);padding:9px 10px;background:var(--gray-50);border-bottom:2px solid var(--gray-200);white-space:nowrap}.anom-t th.r,.anom-t td.r{text-align:right !important}
 .anom-t td{text-align:left !important;padding:9px 10px;border-bottom:1px solid var(--gray-100);color:var(--gray-600);vertical-align:top;line-height:1.45}.anom-t td b{color:var(--black)}
 .anom-t td:nth-child(3){min-width:200px}.anom-t td:nth-child(5){min-width:150px}
+.adm-top{align-items:stretch}.adm-izq{display:flex;flex-direction:column;gap:10px}
+.adm-fun{display:flex;flex-direction:column}
+.fa-row{display:grid;grid-template-columns:130px 1fr 90px 150px;align-items:center;gap:12px;font-size:12px;padding:9px 0;border-bottom:1px dashed var(--gray-200)}
+.fa-row:last-child{border-bottom:0}.fa-head{font-size:11px;color:var(--gray-400);font-weight:600;padding-top:0}
+.fa-bar{position:relative;height:30px;background:var(--gray-100);border-radius:6px;overflow:hidden}
+.fa-fill{height:100%;border-radius:6px;min-width:3px}.fa-bar b{position:absolute;left:10px;top:0;line-height:30px;font-size:13px}
+@media(max-width:700px){.fa-row{grid-template-columns:100px 1fr 70px}.fa-row>*:nth-child(3){display:none}}
 </style>
 </head>
 <body class="con-shell">
@@ -333,9 +340,14 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
     <!-- ADMISIONES -->
     <div class="sec-title" id="sec-adm"><span></span>Admisiones<span class="sec-note">oportunidades que crea el sistema académico · todas las del CRM, sin los filtros de arriba (ver anomalías)</span></div>
     <div class="kpi-grid k6" id="kpi-adm"></div>
-    <div class="two-col">
-      <div class="card bl-card"><div class="cc-h">Etapa de admisión<span class="sec-note">en el orden del proceso</span></div><div id="bl-etapa"></div></div>
-      <div class="card chart-card"><div class="cc-h">Oportunidades creadas por día<span class="sec-note">por la etapa en que están hoy</span></div><div class="chart-wrap"><canvas id="ch-adm"></canvas></div></div>
+    <div class="two-col adm-top">
+      <div class="adm-izq">
+        <div class="card bl-card"><div class="cc-h">Etapa de admisión<span class="sec-note">dónde está hoy cada oportunidad</span></div><div id="bl-etapa"></div></div>
+        <div class="card chart-card" style="margin-bottom:0"><div class="cc-h">Oportunidades creadas por día<span class="sec-note">por la etapa en que están hoy</span></div><div class="chart-wrap"><canvas id="ch-adm"></canvas></div></div>
+      </div>
+      <div class="card bl-card adm-fun"><div class="cc-h">Embudo de conversión de admisión<span class="sec-note">acumulado: cada etapa cuenta las oportunidades que llegaron a ella o más adelante</span></div>
+        <div id="fun-adm"></div>
+        <div class="foot-note" id="fun-adm-nota" style="padding:10px 0 0;border:0"></div></div>
     </div>
     <div class="card tcard">
       <div class="tbar"><b style="font-size:12px">Programa por etapa</b><span class="sp"></span><span class="sec-note">el programa se unifica con el nombre oficial del CRM; a la derecha, cómo llega del sistema académico</span></div>
@@ -793,6 +805,28 @@ function renderAdmisiones() {
   const m = count(o, x => x.etapa);
   const etOrden = ETAPAS.concat(ETAPAS_FIN).filter(e => m.has(e)).concat([...m.keys()].filter(e => !ETAPAS.includes(e) && !ETAPAS_FIN.includes(e)));
   barList('bl-etapa', etOrden.map(e => [e, m.get(e)]), { total: N, color: k => COL_ETAPA[k] || C.gris });
+
+  // embudo acumulado: llegaron a la etapa o a una posterior (desistidos/retirados aparte)
+  const enProceso = o.filter(x => x.i >= 0);
+  const primera = Math.min(...enProceso.map(x => x.i));
+  // solo las etapas que el sistema académico usa (las que tienen al menos una oportunidad hoy)
+  const usadas = new Set(enProceso.map(x => x.etapa));
+  const pasos = ETAPAS.slice(isFinite(primera) ? primera : 0).filter(e => usadas.has(e)).map(e => [e, enProceso.filter(x => x.i >= idx(e)).length]);
+  const base = pasos.length ? pasos[0][1] : 0;
+  document.getElementById('fun-adm').innerHTML =
+    `<div class="fa-row fa-head"><div>Etapa</div><div>Llegaron</div><div class="sf-r">% del total</div><div class="sf-r">Conversión desde la anterior</div></div>` +
+    pasos.map(([e, n], k) => {
+      const conv = k ? pct(n, pasos[k - 1][1]) : NaN;
+      return `<div class="fa-row"><div class="sf-lbl">${esc(e)}</div>
+        <div class="fa-bar"><div class="fa-fill" style="width:${base ? (100 * n / base).toFixed(1) : 0}%;background:${COL_ETAPA[e] || C.gris}"></div><b>${fmt(n)}</b></div>
+        <div class="sf-r">${fp(n, base)}</div>
+        <div class="sf-r">${k ? `<span class="${conv >= 70 ? 'c-v' : conv >= 40 ? '' : 'c-r'}">${fp(n, pasos[k - 1][1])}</span>` : '—'}</div></div>`;
+    }).join('');
+  const fin = o.filter(x => ETAPAS_FIN.includes(x.etapa)).length, sinE = o.filter(x => x.i < 0 && !ETAPAS_FIN.includes(x.etapa)).length;
+  document.getElementById('fun-adm-nota').innerHTML = `Base: ${fmt(base)} oportunidades en proceso.` +
+    (fin ? ` ${fmt(fin)} desistidas o retiradas no entran al embudo.` : ' No hay desistidas ni retiradas.') +
+    (sinE ? ` ${fmt(sinE)} con una etapa fuera de la lista.` : '') +
+    ' Conversión: <span class="c-v">70 % o más</span> · entre 40 y 70 % · <span class="c-r">menos de 40 %</span>.';
 
   // creadas por día, por etapa actual
   const dias = [...new Set(o.filter(x => x.cre).map(x => ymd(x.cre)))].sort();
