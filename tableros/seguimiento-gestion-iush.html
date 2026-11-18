@@ -221,6 +221,8 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
 @media(max-width:700px){.fa-row{grid-template-columns:100px 1fr 70px}.fa-row>*:nth-child(3){display:none}}
 .tag-chica{font-size:10px;font-weight:600;padding:1px 6px;border-radius:999px;background:var(--gray-100);color:var(--gray-600);margin-left:6px;white-space:nowrap}
 #f-fuente-adm{font-size:12px}
+.chart-wrap.torta{height:230px}
+.chart-wrap.torta[data-vacio]:empty::after,.chart-wrap.torta[data-vacio] canvas:not([style])+*{content:attr(data-vacio)}
 </style>
 </head>
 <body class="con-shell">
@@ -350,6 +352,10 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
       <div class="card bl-card adm-fun"><div class="cc-h">Embudo de conversión de admisión<span class="sec-note">acumulado: cada etapa cuenta las oportunidades que llegaron a ella o más adelante</span></div>
         <div id="fun-adm"></div>
         <div class="foot-note" id="fun-adm-nota" style="padding:10px 0 0;border:0"></div></div>
+    </div>
+    <div class="two-col">
+      <div class="card chart-card"><div class="cc-h">¿De qué fuente vienen las admisiones?<span class="sec-note" id="n-torta-adm"></span></div><div class="chart-wrap torta"><canvas id="ch-torta-adm"></canvas></div></div>
+      <div class="card chart-card"><div class="cc-h">¿De qué fuente vienen las matrículas?<span class="sec-note" id="n-torta-mat"></span></div><div class="chart-wrap torta"><canvas id="ch-torta-mat"></canvas></div></div>
     </div>
     <div class="card tcard">
       <div class="tbar"><b style="font-size:12px">Embudo de admisión por fuente</b>
@@ -535,7 +541,7 @@ function prepare() {
 function initUI() {
   const fill = (id, vals) => { const s = document.getElementById(id); vals.forEach(v => { const o = document.createElement('option'); o.value = o.textContent = v; s.appendChild(o); }); };
   const byN = m => [...m.entries()].sort((a, b) => b[1] - a[1]).map(e => e[0]);
-  fill('f-origen', byN(count(D.leads, l => l.det)));
+  fill('f-origen', byN(count(D.leads, l => fuenteLead(l))));
   fill('f-prog', [...new Set(D.leads.map(l => l.prog))].sort((a, b) => a.localeCompare(b, 'es')));
   fill('f-own', ['Sin asesor (IA)'].concat([...new Set(D.leads.map(l => l.asesor).filter(Boolean))].sort()));
   const q = document.getElementById('quick');
@@ -571,7 +577,7 @@ function filtrados() {
   const a = d1 ? new Date(d1 + 'T00:00:00') : null, b = d2 ? new Date(d2 + 'T23:59:59') : null;
   const o = document.getElementById('f-origen').value, p = document.getElementById('f-prog').value, w = document.getElementById('f-own').value;
   document.getElementById('rango-note').textContent = (d1 && d2) ? 'registros creados del ' + d1.split('-').reverse().join('/') + ' al ' + d2.split('-').reverse().join('/') : '';
-  return D.leads.filter(l => (!a || l.cre >= a) && (!b || l.cre <= b) && (!o || l.det === o) && (!p || l.prog === p) &&
+  return D.leads.filter(l => (!a || l.cre >= a) && (!b || l.cre <= b) && (!o || fuenteLead(l) === o) && (!p || l.prog === p) &&
     (!w || (w === 'Sin asesor (IA)' ? !l.asesor : l.asesor === w)));
 }
 
@@ -714,7 +720,7 @@ let lastL = [];
 function renderTablaGrupo(L) {
   if (L) lastL = L; L = lastL;
   const g = document.getElementById('f-grupo').value;
-  const key = l => g === 'prog' ? l.prog : g === 'camp' ? l.camp : l.det;
+  const key = l => g === 'prog' ? l.prog : g === 'camp' ? l.camp : fuenteLead(l);
   const m = new Map();
   L.forEach(l => { const k = key(l); const o = m.get(k) || { n: 0, ll: 0, cv: 0, ca: 0, tr: 0, co: 0, cn: 0 };
     o.n++; if (l.llamado) o.ll++; if (l.conversacion) o.cv++; if (l.calificado) o.ca++; if (l.transferido) o.tr++; if (l.contactado) o.co++; if (l.conv) o.cn++; m.set(k, o); });
@@ -791,14 +797,28 @@ function renderAsesores(L) {
     <tbody>${tt.map(r => `<tr><td>${esc(r[0])}</td><td class="r">${fmt(r[1])}</td><td class="r">${fmt(r[2])}</td><td class="r">${fmt(r[3])}</td><td class="r ${r[4] ? 'c-r' : ''}">${fmt(r[4])}</td></tr>`).join('')}</tbody>`;
 }
 
+// Fuente de un posible aspirante: el origen del registro. Solo en tráfico pago se agrega el medio (Meta / Google);
+// en los demás el "detalle del origen" no aporta (y en Web llega mal como "Sistema académico").
+const fuenteLead = l => !l.origen ? 'Sin origen' : l.origen === 'Tráfico Pago' && l.det && l.det !== 'Sin origen' ? 'Tráfico Pago · ' + l.det : l.origen;
+const COL_FUENTE = colorDe([[/Meta/, C.verde], [/Google/, C.naranja], [/^Web/, C.azul], [/Sistema académico/, '#9a9992'], [/./, C.gris]]);
+function torta(id, entries, vacio) {
+  const tot = entries.reduce((s, e) => s + e[1], 0);
+  const el = document.getElementById(id);
+  if (!tot) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } el.parentNode.dataset.vacio = vacio; return; }
+  chart(id, { type: 'doughnut', data: { labels: entries.map(e => `${e[0]}: ${fmt(e[1])} (${fp(e[1], tot)})`),
+      datasets: [{ data: entries.map(e => e[1]), backgroundColor: entries.map(e => COL_FUENTE(e[0])), borderColor: '#fcfcfa', borderWidth: 2 }] },
+    options: { maintainAspectRatio: false, animation: false, cutout: '58%',
+      plugins: { legend: { position: 'right', labels: { boxWidth: 10, boxHeight: 10, font: { family: 'Poppins', size: 12 } } },
+        tooltip: { titleFont: { family: 'Poppins' }, bodyFont: { family: 'Poppins' }, callbacks: { label: c => ' ' + c.label } } } } });
+}
+
 // Embudo acumulado de admisión abierto por la fuente del posible aspirante de origen
 let ADM = null;
 const MUESTRA_MIN = 10;
 function renderFunFuente() {
   if (!ADM) return;
   const modo = document.getElementById('f-fuente-adm').value;
-  const keyLead = l => modo === 'entero' ? (l.entero || 'Sin dato')
-    : (l.origen || 'Sin origen') + (l.det && l.det !== 'Sin origen' && l.det !== l.origen ? ' · ' + l.det : '');
+  const keyLead = l => modo === 'entero' ? (l.entero || 'Sin dato') : fuenteLead(l);
   const fuente = x => x.lead ? keyLead(x.lead) : 'Sin posible aspirante en el CRM';
   const et = ADM.etapas, idx = ADM.idx;
   // posibles aspirantes por fuente (todos los del CRM, como las oportunidades: sin los filtros de arriba)
@@ -882,6 +902,13 @@ function renderAdmisiones() {
         <div class="sf-r">${k ? `<span class="${conv >= 70 ? 'c-v' : conv >= 40 ? '' : 'c-r'}">${fp(n, pasos[k - 1][1])}</span>` : '—'}</div></div>`;
     }).join('');
   ADM = { enProceso, etapas: pasos.map(p => p[0]), idx };
+  // tortas: fuente de todas las admisiones (oportunidades) y de las matrículas
+  const fuenteOpp = x => x.lead ? fuenteLead(x.lead) : 'Sin posible aspirante en el CRM';
+  const matr = o.filter(x => x.etapa === 'Matriculado');
+  torta('ch-torta-adm', sorted(count(o, fuenteOpp)), 'Sin admisiones');
+  torta('ch-torta-mat', sorted(count(matr, fuenteOpp)), 'Aún no hay matrículas');
+  document.getElementById('n-torta-adm').textContent = fmt(N) + ' oportunidades';
+  document.getElementById('n-torta-mat').textContent = matr.length ? fmt(matr.length) + (matr.length === 1 ? ' matrícula' : ' matrículas') : 'aún no hay matrículas';
   renderFunFuente();
   const fin = o.filter(x => ETAPAS_FIN.includes(x.etapa)).length, sinE = o.filter(x => x.i < 0 && !ETAPAS_FIN.includes(x.etapa)).length;
   document.getElementById('fun-adm-nota').innerHTML = `Base: ${fmt(base)} oportunidades en proceso.` +
@@ -908,8 +935,8 @@ function renderAdmisiones() {
 
   // PIN, origen, paso por IA
   barList('bl-pin', sorted(count(o, x => x.pin)), { total: N, color: COLOR_PIN });
-  barList('bl-adm-origen', sorted(count(o, x => x.lead ? (x.lead.origen || 'Sin origen') + (x.lead.det && x.lead.det !== x.lead.origen ? ' · ' + x.lead.det : '') : 'Sin posible aspirante en el CRM')), { total: N,
-    color: colorDe([[/Tráfico Pago/, C.verde], [/^Sistema/, C.gris]]) });
+  barList('bl-adm-origen', sorted(count(o, x => x.lead ? fuenteLead(x.lead) : 'Sin posible aspirante en el CRM')), { total: N,
+    color: COL_FUENTE });
   const via = x => !x.lead ? 'Sin posible aspirante en el CRM' : x.lead.transferido ? 'Calificado por la IA y asignado a asesor'
     : x.lead.llamado ? 'Llamado por la IA, sin calificar' : 'No pasó por la IA';
   barList('bl-adm-ia', ['Calificado por la IA y asignado a asesor', 'Llamado por la IA, sin calificar', 'No pasó por la IA', 'Sin posible aspirante en el CRM']
@@ -964,6 +991,9 @@ function renderAdmisiones() {
     'El registro del que sale la oportunidad tampoco tiene programa de interés.', 'Integración con el sistema académico');
   add(o.filter(x => !x.lead).length, 'a', 'Oportunidad sin posible aspirante en el CRM',
     'No se encontró el registro de origen; no se puede saber de dónde vino.', 'CRM · conversión');
+  add(D.leads.filter(l => l.origen === 'Web' && l.det === 'Sistema académico').length, 'a', 'Posibles aspirantes "Web" con detalle del origen "Sistema académico"',
+    'Web son los que llegan por los formularios de la página; "Sistema académico" es otra fuente. El detalle del origen está mal cargado (debería ser "Portal web"). El tablero los cuenta como Web.',
+    'Integración / regla de detalle del origen');
   const lp = D.leads.filter(l => l.prog !== 'Sin programa' && !PROG_OFICIAL.includes(l.prog)).length;
   add(lp, 'a', 'Posibles aspirantes con programa fuera de la lista oficial',
     'Llegan de la landing con otro formato (por ejemplo "ADMINISTRACION DE EMPRESAS") y no entran a la regla de asignación de asesor.', 'Landing / formulario');
