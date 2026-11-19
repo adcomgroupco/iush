@@ -185,7 +185,7 @@ td .stack{display:inline-flex;vertical-align:middle;width:120px}
 </style>
 <style>
 /* IUSH seguimiento de gestión */
-.kpi-grid.k6{grid-template-columns:repeat(6,1fr)}
+.kpi-grid.k6{grid-template-columns:repeat(6,1fr)}.kpi-grid.k4{grid-template-columns:repeat(4,1fr)}
 .fun-row{grid-template-columns:190px minmax(200px,1fr) 110px 150px}
 .cc-h{font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
@@ -202,9 +202,9 @@ td .stack{display:inline-flex;vertical-align:middle;width:120px}
 .sem-n{font-size:11px;margin-left:8px;font-variant-numeric:tabular-nums}
 .nota{padding:16px 18px;margin-bottom:30px;font-size:12px;color:var(--gray-600);line-height:1.6}.nota p{margin:0 0 8px}
 #f-grupo{font-size:12px}
-@media(max-width:1500px){.kpi-grid.k6{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1500px){.kpi-grid.k6{grid-template-columns:repeat(3,1fr)}.kpi-grid.k4{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1000px){.grid3{grid-template-columns:1fr}.cols2{column-count:1}}
-@media(max-width:700px){.kpi-grid.k6,.grid4{grid-template-columns:1fr}.fun-row{grid-template-columns:120px 1fr 70px}.fun-row>*:nth-child(4){display:none}}
+@media(max-width:700px){.kpi-grid.k6,.kpi-grid.k4,.grid4{grid-template-columns:1fr}.fun-row{grid-template-columns:120px 1fr 70px}.fun-row>*:nth-child(4){display:none}}
 .cell{display:inline-block;min-width:26px;text-align:center;border-radius:4px;padding:1px 6px;font-weight:600;color:var(--black)}
 td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;min-width:220px}
 .comp{display:inline-block;width:160px;height:10px;background:var(--gray-100);border-radius:4px;overflow:hidden;vertical-align:middle}.comp i{display:block;height:100%}
@@ -248,7 +248,6 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
     <a href="#sec-par"><b></b>Parámetros del semáforo</a>
     <a href="#sec-ase"><b></b>Asesores</a>
     <a href="#sec-adm"><b></b>Admisiones</a>
-    <a href="#sec-anom"><b></b>Anomalías en admisiones</a>
     <a href="#sec-nota"><b></b>Cómo se calcula</a>
   </div>
   <div class="app-sidebar-foot">Datos al: <span id="last-upd-side">—</span></div>
@@ -342,8 +341,8 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
     </div>
 
     <!-- ADMISIONES -->
-    <div class="sec-title" id="sec-adm"><span></span>Admisiones<span class="sec-note">oportunidades que crea el sistema académico · todas las del CRM, sin los filtros de arriba (ver anomalías)</span></div>
-    <div class="kpi-grid k6" id="kpi-adm"></div>
+    <div class="sec-title" id="sec-adm"><span></span>Admisiones<span class="sec-note">oportunidades que crea el sistema académico · todas las del CRM, sin los filtros de arriba</span></div>
+    <div class="kpi-grid k4" id="kpi-adm"></div>
     <div class="two-col adm-top">
       <div class="adm-izq">
         <div class="card bl-card"><div class="cc-h">Etapa de admisión<span class="sec-note">dónde está hoy cada oportunidad</span></div><div id="bl-etapa"></div></div>
@@ -373,12 +372,6 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
       <div class="card bl-card"><div class="cc-h">Origen del posible aspirante<span class="sec-note">del que salió la oportunidad</span></div><div id="bl-adm-origen"></div></div>
       <div class="card bl-card"><div class="cc-h">¿Pasó por la IA y el asesor?</div><div id="bl-adm-ia"></div></div>
     </div>
-    <div class="card tcard">
-      <div class="tbar"><b style="font-size:12px">Campos llenos en las oportunidades</b><span class="sp"></span><span class="sec-note">qué tan completo llega cada dato</span></div>
-      <div class="tscroll"><table id="t-adm-campos"></table></div>
-    </div>
-    <div class="sec-title" id="sec-anom"><span></span>Anomalías encontradas en admisiones<span class="sec-note">se recalculan con cada actualización; cuando se corrigen en el CRM, desaparecen de esta lista</span></div>
-    <div class="card anom" id="anom"></div>
 
     <!-- NOTA -->
     <div class="sec-title" id="sec-nota"><span></span>Cómo se calcula</div>
@@ -852,7 +845,7 @@ function renderFunFuente() {
   const dup = ADM.enProceso.length - personas.length;
   document.getElementById('fun-fuente-nota').innerHTML =
     `Cuenta personas, no oportunidades: ${fmt(personas.length)} personas con ${fmt(ADM.enProceso.length)} oportunidades` +
-    (dup ? ` (hay aspirantes con más de una oportunidad; se toma la más avanzada, ver anomalías). ` : '. ') +
+    (dup ? ` (hay aspirantes con más de una oportunidad; se toma la más avanzada). ` : '. ') +
     'Posibles aspirantes: todos los registros del CRM de esa fuente (sin los filtros de arriba). La oportunidad nace cuando el posible aspirante se convierte, ' +
     'así que "% de posibles aspirantes" es cuántos de esa fuente llegaron a admisiones. La fuente de cada oportunidad es la de su posible aspirante de origen. ' +
     '"% paso" = cuántas de la etapa anterior llegaron a esta: <span class="c-v">70 % o más</span> · entre 40 y 70 % · <span class="c-r">menos de 40 %</span>. ' +
@@ -866,8 +859,6 @@ function renderAdmisiones() {
   const idx = e => ETAPAS.indexOf(e);
   const leadBy = new Map(D.leads.filter(l => l.idAsp).map(l => [l.idAsp, l]));
   o.forEach(x => { x.lead = leadBy.get(x.idAsp) || null; x.progOf = progOficial(x.prog); x.i = idx(x.etapa); });
-  const exento = x => /Gratuito|Exento/i.test(x.pin);
-  const conAsesor = o.filter(x => x.owner && x.owner !== INST);
 
   // KPIs
   const adm = o.filter(x => x.i >= idx('Admitido')).length, mat = o.filter(x => x.etapa === 'Matriculado').length;
@@ -876,9 +867,7 @@ function renderAdmisiones() {
     kpi('Oportunidades', fmt(N), 'creadas por el sistema académico') +
     kpi('Admitidos', fmt(adm), fp(adm, N) + ' · incluye matriculados') +
     kpi('Matriculados', fmt(mat), fp(mat, N) + ' de las oportunidades') +
-    kpi('PIN pagado o exento', fmt(pinOk), fp(pinOk, N) + ' de las oportunidades') +
-    kpi('Con programa', fmt(o.filter(x => x.prog).length), fmt(o.filter(x => !x.prog).length) + ' llegan sin programa', o.some(x => !x.prog) ? 'k-a' : '') +
-    kpi('Con asesor responsable', fmt(conAsesor.length), 'de ' + fmt(N) + ' oportunidades', conAsesor.length < N ? 'k-r' : '');
+    kpi('PIN pagado o exento', fmt(pinOk), fp(pinOk, N) + ' de las oportunidades');
 
   // etapas en orden del proceso
   const m = count(o, x => x.etapa);
@@ -942,67 +931,6 @@ function renderAdmisiones() {
   barList('bl-adm-ia', ['Calificado por la IA y asignado a asesor', 'Llamado por la IA, sin calificar', 'No pasó por la IA', 'Sin posible aspirante en el CRM']
     .map(k => [k, o.filter(x => via(x) === k).length]).filter(e => e[1]), { total: N,
     color: colorDe([[/^Calificado/, C.verde], [/^Llamado/, C.azul], [/No pasó|Sin posible/, C.gris]]) });
-
-  // completitud
-  const campos = [
-    ['Programa', x => x.prog], ['Programa con nombre oficial del CRM', x => x.progOf], ['Asesor responsable (propietario)', x => x.owner && x.owner !== INST],
-    ['ID externo de inscripción', x => x.idIns], ['Fecha de generación de factura', x => x.fFac], ['Fecha de habilitación del PIN', x => x.fPin],
-    ['Fecha y hora de inscripción', x => x.fIns], ['Fecha de admisión', x => x.fAdm], ['Fecha de matrícula', x => x.fMat],
-    ['Hora de cambio de etapa', x => x.tEtapa], ['Situación del proceso', x => x.situacion], ['Tipo de aspirante', x => x.tipo],
-    ['Momento de inicio', x => x.momento], ['Nivel de interés', x => x.nivel]];
-  document.getElementById('t-adm-campos').innerHTML = `<thead><tr><th>Campo</th><th class="r">Llenos</th><th class="r">Vacíos</th><th>Completitud</th></tr></thead><tbody>` +
-    campos.map(([n, f]) => { const k = o.filter(x => f(x)).length, p = N ? k / N : 0;
-      return `<tr><td>${n}</td><td class="r">${k}</td><td class="r ${N - k ? '' : 't-mute'}">${N - k}</td><td><span class="comp"><i style="width:${(100 * p).toFixed(0)}%;background:${p >= .9 ? C.verde : p >= .5 ? C.azul : C.naranja}"></i></span><span class="sem-n">${fp(k, N)}</span></td></tr>`; }).join('') + '</tbody>';
-
-  // anomalías
-  const fechaEtapa = [['Generó factura', 'fFac', 'fecha de generación de factura', x => !exento(x)], ['PIN habilitado', 'fPin', 'fecha de habilitación del PIN', x => !exento(x)],
-    ['Inscrito', 'fIns', 'fecha de inscripción', () => true], ['Admitido', 'fAdm', 'fecha de admisión', () => true], ['Matriculado', 'fMat', 'fecha de matrícula', () => true]];
-  const A = [];
-  const add = (n, sev, titulo, detalle, quien) => { if (n > 0) A.push({ n, sev, titulo, detalle, quien }); };
-  add(conAsesor.length < N ? N - conAsesor.length : 0, 'r', 'Oportunidades sin asesor responsable',
-    'Están a nombre del usuario institucional. No hay a quién pedirle el seguimiento de la admisión ni se pueden filtrar por asesor.', 'CRM · regla de asignación');
-  const sinProg = o.filter(x => !x.prog), sinProgAntes = sinProg.filter(x => x.i >= 0 && x.i < idx('Inscrito')).length;
-  add(sinProg.length, 'r', 'Oportunidades sin programa',
-    'El sistema académico las crea sin programa: no se sabe a qué carrera corresponden ni se pueden cruzar con la pauta.' +
-    (sinProg.length && sinProgAntes === sinProg.length ? ' Todas están antes de "Inscrito" (factura o PIN): el programa solo llega desde la inscripción.'
-      : sinProgAntes ? ` ${sinProgAntes} de ellas están antes de "Inscrito": el programa suele llegar solo desde la inscripción.` : ''),
-    'Integración con el sistema académico');
-  add(o.filter(x => x.prog && x.prog !== x.progOf).length, 'a', 'Programa con un nombre distinto al oficial del CRM',
-    'Llegan con el nombre del sistema académico (mayúsculas, "(10)", "(PENSUM 20081)"…). El tablero los unifica, pero en el CRM quedan distintos a los del posible aspirante.', 'Integración · homologación de programas');
-  add(o.filter(x => x.prog && !x.progOf).length, 'r', 'Programa que no corresponde a ninguno oficial',
-    'No se pudo unificar con ningún programa del CRM (en la tabla aparecen con ⚠).', 'Integración · homologación de programas');
-  fechaEtapa.forEach(([et, campo, nombre, aplica]) => {
-    add(o.filter(x => x.i >= idx(et) && aplica(x) && !x[campo]).length, 'a', `En "${et}" o más adelante sin ${nombre}`,
-      `La etapa dice que ya pasó por "${et}", pero falta la ${nombre}.`, 'Integración con el sistema académico');
-  });
-  add(o.filter(x => fechaEtapa.some(([et, campo]) => x[campo] && idx(et) > x.i)).length, 'a', 'Etapa atrasada frente a sus fechas',
-    'Tienen la fecha de una etapa posterior (por ejemplo, fecha de matrícula estando en "Inscrito"): la etapa no se actualizó.', 'Integración con el sistema académico');
-  const porAsp = count(o.filter(x => x.idAsp), x => x.idAsp);
-  const dupAsp = [...porAsp.values()].filter(v => v > 1);
-  add(dupAsp.reduce((s, v) => s + v, 0), 'r', 'Aspirantes con más de una oportunidad',
-    `${fmt(dupAsp.length)} aspirantes tienen varias oportunidades: una que se quedó en "Generó factura" sin programa y otra creada después que sí avanzó. ` +
-    'Parece que el sistema académico crea una oportunidad nueva al inscribir en lugar de actualizar la existente; esto infla "Generó factura" y baja su conversión.',
-    'Integración con el sistema académico');
-  add(o.filter(x => !x.tEtapa).length, 'a', 'Sin hora de cambio de etapa',
-    'No se puede medir cuánto tarda cada paso del proceso de admisión.', 'CRM · historial de etapas');
-  add(o.filter(x => !x.tipo && !x.momento && !x.nivel).length, 'a', 'Sin tipo de aspirante, momento de inicio ni nivel de interés',
-    'Campos de perfil que nunca se llenan en las oportunidades.', 'Integración / equipo comercial');
-  add(o.filter(x => x.lead && x.lead.prog === 'Sin programa').length, 'a', 'Posible aspirante de origen sin programa',
-    'El registro del que sale la oportunidad tampoco tiene programa de interés.', 'Integración con el sistema académico');
-  add(o.filter(x => !x.lead).length, 'a', 'Oportunidad sin posible aspirante en el CRM',
-    'No se encontró el registro de origen; no se puede saber de dónde vino.', 'CRM · conversión');
-  add(D.leads.filter(l => l.origen === 'Web' && l.det === 'Sistema académico').length, 'a', 'Posibles aspirantes "Web" con detalle del origen "Sistema académico"',
-    'Web son los que llegan por los formularios de la página; "Sistema académico" es otra fuente. El detalle del origen está mal cargado (debería ser "Portal web"). El tablero los cuenta como Web.',
-    'Integración / regla de detalle del origen');
-  const lp = D.leads.filter(l => l.prog !== 'Sin programa' && !PROG_OFICIAL.includes(l.prog)).length;
-  add(lp, 'a', 'Posibles aspirantes con programa fuera de la lista oficial',
-    'Llegan de la landing con otro formato (por ejemplo "ADMINISTRACION DE EMPRESAS") y no entran a la regla de asignación de asesor.', 'Landing / formulario');
-  const sevOrd = { r: 0, a: 1 };
-  A.sort((a, b) => sevOrd[a.sev] - sevOrd[b.sev] || b.n - a.n);
-  document.getElementById('anom').innerHTML = A.length ? `<table class="anom-t"><thead><tr><th></th><th class="r">Registros</th><th>Anomalía</th><th>Qué pasa</th><th>Dónde se corrige</th></tr></thead><tbody>` +
-    A.map(a => `<tr><td><span class="dot d-${a.sev}"></span></td><td class="r"><b>${fmt(a.n)}</b></td><td><b>${esc(a.titulo)}</b></td><td>${esc(a.detalle)}</td><td class="t-mute">${esc(a.quien)}</td></tr>`).join('') +
-    `</tbody></table><div class="foot-note"><span class="dot d-r"></span>impide hacer seguimiento o cruzar con la pauta · <span class="dot d-a"></span>resta precisión al análisis</div>`
-    : '<div class="bl-empty" style="padding:14px">Sin anomalías: los datos de admisión llegan completos.</div>';
 }
 
 load();
