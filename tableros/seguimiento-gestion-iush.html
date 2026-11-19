@@ -364,8 +364,9 @@ td.raw{font-size:11px;color:var(--gray-400);white-space:normal;line-height:1.5;m
       <div class="foot-note" id="fun-fuente-nota"></div>
     </div>
     <div class="card tcard">
-      <div class="tbar"><b style="font-size:12px">Programa por etapa</b><span class="sp"></span><span class="sec-note">el programa se unifica con el nombre oficial del CRM; a la derecha, cómo llega del sistema académico</span></div>
+      <div class="tbar"><b style="font-size:12px">Embudo de admisión por programa</b><span class="sp"></span><span class="sec-note">acumulado por etapa y % que pasó desde la anterior; el programa se unifica con el nombre oficial del CRM</span></div>
       <div class="tscroll"><table id="t-adm-prog"></table></div>
+      <div class="foot-note" id="adm-prog-nota"></div>
     </div>
     <div class="grid3">
       <div class="card bl-card"><div class="cc-h">Estado del PIN</div><div id="bl-pin"></div></div>
@@ -911,16 +912,35 @@ function renderAdmisiones() {
     label: e, backgroundColor: COL_ETAPA[e] || C.gris,
     data: dias.map(k => o.filter(x => x.cre && ymd(x.cre) === k && x.etapa === e).length) })), true));
 
-  // programa x etapa
-  const cols = etOrden;
+  // programa x etapa: embudo acumulado (llegaron a la etapa o más adelante) y % de paso desde la anterior
+  const PROG_MIN = 5;
   const pm = new Map();
-  o.forEach(x => { const k = x.progOf || (x.prog ? '⚠ ' + x.prog : 'Sin programa'); const r = pm.get(k) || { n: 0, e: {}, raw: new Set() };
-    r.n++; r.e[x.etapa] = (r.e[x.etapa] || 0) + 1; if (x.prog) r.raw.add(x.prog); pm.set(k, r); });
-  const prow = [...pm.entries()].sort((a, b) => (a[0] === 'Sin programa') - (b[0] === 'Sin programa') || b[1].n - a[1].n);
-  document.getElementById('t-adm-prog').innerHTML = `<thead><tr><th>Programa</th>${cols.map(c => `<th class="r">${esc(c)}</th>`).join('')}<th class="r grp">Total</th><th class="grp">Cómo llega del sistema académico</th></tr></thead>
-    <tbody>${prow.map(([k, r]) => `<tr><td>${k === 'Sin programa' ? '<span class="c-a">Sin programa</span>' : esc(k)}</td>${cols.map(c => `<td class="r">${r.e[c] ? `<span class="cell" style="background:${COL_ETAPA[c] || C.gris}33">${r.e[c]}</span>` : '<span class="t-mute">·</span>'}</td>`).join('')}
-      <td class="r grp"><b>${r.n}</b></td><td class="grp raw">${r.raw.size ? [...r.raw].map(s => esc(s)).join('<br>') : '<span class="t-mute">(vacío)</span>'}</td></tr>`).join('')}
-      <tr class="tr-total"><td>Total</td>${cols.map(c => `<td class="r">${m.get(c) || 0}</td>`).join('')}<td class="r grp">${N}</td><td class="grp"></td></tr></tbody>`;
+  o.forEach(x => { const k = x.progOf || (x.prog ? '⚠ ' + x.prog : 'Sin programa'); const r = pm.get(k) || { xs: [], raw: new Set() };
+    r.xs.push(x); if (x.prog) r.raw.add(x.prog); pm.set(k, r); });
+  const etP = pasos.map(p => p[0]);
+  const embudo = xs => etP.map(e => xs.filter(x => x.i >= idx(e)).length);
+  const convCls = (c, gris) => gris ? 't-mute' : c >= 70 ? 'c-v' : c >= 40 ? '' : 'c-r';
+  const prow = [...pm.entries()].map(([k, r]) => [k, r, embudo(r.xs)])
+    .sort((a, b) => (a[0] === 'Sin programa') - (b[0] === 'Sin programa') || b[2][0] - a[2][0] || b[1].xs.length - a[1].xs.length);
+  const filaProg = (k, n, total, raw, tot) => {
+    const chica = !tot && n[0] < PROG_MIN;
+    return `<tr class="${tot ? 'tr-total' : ''}"><td>${k === 'Sin programa' ? '<span class="c-a">Sin programa</span>' : esc(k)}</td>` +
+      n.map((v, j) => `<td class="r${j ? ' grp' : ''}">${v ? (tot ? fmt(v) : `<span class="cell" style="background:${COL_ETAPA[etP[j]] || C.gris}33">${fmt(v)}</span>`) : '<span class="t-mute">·</span>'}</td>` +
+        (j ? `<td class="r">${n[j - 1] ? `<span class="${convCls(pct(v, n[j - 1]), chica)}">${fp(v, n[j - 1])}</span>` : '<span class="t-mute">—</span>'}</td>` : '')).join('') +
+      `<td class="r grp">${n[0] ? `<span class="${convCls(pct(n[n.length - 1], n[0]), chica)}">${fp(n[n.length - 1], n[0])}</span>` : '<span class="t-mute">—</span>'}</td>` +
+      `<td class="r grp"><b>${fmt(total)}</b></td>` +
+      `<td class="grp raw">${tot ? '' : raw.size ? [...raw].map(x => esc(x)).join('<br>') : '<span class="t-mute">(vacío)</span>'}</td></tr>`;
+  };
+  document.getElementById('t-adm-prog').innerHTML = `<thead><tr><th>Programa</th>` +
+    etP.map((e, j) => `<th class="r${j ? ' grp' : ''}">${esc(e)}</th>` + (j ? '<th class="r">% paso</th>' : '')).join('') +
+    `<th class="r grp">De ${esc(etP[0] || '')} a ${esc(etP[etP.length - 1] || '')}</th><th class="r grp">Oportunidades</th><th class="grp">Cómo llega del sistema académico</th></tr></thead><tbody>` +
+    prow.map(([k, r, n]) => filaProg(k, n, r.xs.length, r.raw, false)).join('') +
+    filaProg('Total', embudo(o), N, null, true) + '</tbody>';
+  document.getElementById('adm-prog-nota').innerHTML =
+    'Cada etapa cuenta las oportunidades que llegaron a ella o más adelante. "% paso" = cuántas de la etapa anterior llegaron a esta: ' +
+    '<span class="c-v">70 % o más</span> · entre 40 y 70 % · <span class="c-r">menos de 40 %</span>. ' +
+    `Con menos de ${PROG_MIN} oportunidades en la primera etapa el porcentaje no es concluyente y se muestra en gris. ` +
+    '"Oportunidades" incluye las desistidas o retiradas, que no entran al embudo.';
 
   // PIN, origen, paso por IA
   barList('bl-pin', sorted(count(o, x => x.pin)), { total: N, color: COLOR_PIN });
